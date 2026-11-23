@@ -5,3 +5,12 @@ Run the native Standard Residual from scratch to update 8,000, including validat
 The training checkout is the unmodified [public upstream snapshot](https://github.com/Interactive-Active-AI/NextTransformer/tree/b2ea46627f7d0d5c9ef57a655c43b553558417d3) used to obtain the earlier reference curves. The [official run record](https://github.com/Interactive-Active-AI/NextTransformer/blob/b2ea46627f7d0d5c9ef57a655c43b553558417d3/results/runs/residual_standard.json) lists an earlier commit, 4dd6ebb9, which does not resolve in the public upstream repository. The model and training protocol hashes and the tokenizer fingerprint match the published run. The local data preparation verified the pinned dataset files; the prepared-resource manifest file hash differs from the historical audit. PyTorch 2.9.1+cu128, CUDA 12.8 and NCCL 2.27.5 match the versions in that audit. Its recorded software section does not identify the GPU type or all kernel settings.
 
 The separate eight-rank preflight verifies all 46 output projection matrices start at zero and the 47 unused native residual scalars are frozen. The full run then starts with a fresh model, optimizer and dataloader. The W&B display name is `standard-residual-official-zero-init-8k-local-seed42` in `yibozhong657-none/nexttransformer-chordres`. Metrics include local BPB minus published BPB on the common 250-step grid, and local minus published CORE-22 at 8,000. Reference endpoints at update 8,000 are BPB 0.79107557 and CORE-22 19.63293. Training loss is recorded locally and on W&B; the published record has no intermediate training loss curve.
+
+## First measured comparison
+
+[Local run](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/242bdd3d) and [published reference replay](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/ref3f93ca6) use the same training-step axis.
+
+| Step | Local validation BPB | Published validation BPB | Local minus published |
+|---:|---:|---:|---:|
+| 0 | 3.16874171 | 3.16876593 | -0.00002422 |
+| 250 | 1.00873297 | 1.00738386 | +0.00134911 |
