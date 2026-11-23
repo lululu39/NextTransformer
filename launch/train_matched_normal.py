@@ -1,12 +1,11 @@
-"""Research comparison of two residual models with matched random output projections.
+"""Research comparison of residual models with matched random output projections.
 
-Launch like nexttransformer.train, using the residual_standard or chordres_zero_save_force
-config. The ordinary model, cost proof, optimizer and schedule are reused. The shared
+Launch like nexttransformer.train, using a supported residual configuration. The ordinary model, cost proof, optimizer and schedule are reused. The shared
 shell's projection initialization is changed only through this research entry point.
 """
 import math
 
-METHODS = {"residual_standard", "chordres_zero_save_force"}
+METHODS = {"residual_standard", "chordres_zero_save_force", "chordres_vembed_save_force"}
 
 
 def initialization(seed, depth):
