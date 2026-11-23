@@ -4,8 +4,11 @@ Launch like nexttransformer.train, using a supported residual configuration. The
 shell's projection initialization is changed only through this research entry point.
 """
 import math
+from dataclasses import replace
 
-METHODS = {"mhc_nanochat_readout", "residual_standard", "chordres_zero_save_force", "chordres_vembed_save_force"}
+NO_VE_METHOD = "chordres_no_ve_save_force"
+
+METHODS = {NO_VE_METHOD, "mhc_nanochat_readout", "residual_standard", "chordres_zero_save_force", "chordres_vembed_save_force"}
 
 
 def initialization(seed, depth):
@@ -27,6 +30,19 @@ def initialize_projections(model, seed):
     return model
 
 
+def build_matched_model(build, config, device, seed):
+    model = build(config, device, seed=seed)
+    if config.method == NO_VE_METHOD:
+        # Removing VE gates changes the native initialization RNG sequence. Seed
+        # the shared tensors from the VE-on control and preserve its final RNG state.
+        control_config = replace(config, method="chordres_zero_save_force", options=())
+        control = build(control_config, device, seed=seed)
+        shared = {name: weight for name, weight in control.state_dict().items()
+                  if not name.startswith("value_embeds.") and ".ve_gate." not in name}
+        model.load_state_dict(shared, strict=True)
+    return initialize_projections(model, seed)
+
+
 def install(trainer):
     parse, build, identity = trainer.parse, trainer.build_model, trainer.software_identity
     tracker = trainer.ReferenceTracker
@@ -38,7 +54,7 @@ def install(trainer):
         return args
 
     def build_matched(config, device, seed):
-        return initialize_projections(build(config, device, seed=seed), seed)
+        return build_matched_model(build, config, device, seed)
 
     def software(config, sparse_backend):
         record = identity(config, sparse_backend)

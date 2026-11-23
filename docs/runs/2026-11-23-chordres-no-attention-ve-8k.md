@@ -1,0 +1,9 @@
+# ChordRes from rest with input smear and no attention VE
+
+The [high control-LR VE-on experiment](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/13fb5703) stopped with a complete checkpoint and validation at update 4,000, reaching 0.79343645 BPB. Its 8,000-step CORE-22 was not measured.
+
+Start a fresh 8,000-update run using the same [high control-LR research launcher](../../launch/train_chord_control_lr.py), the [no-VE model](../../configs/residual/chordres_no_ve_save_force.json), seed 42 and the same ClimbMix order, 2,048 context, 1,048,576 tokens/update, eight GPUs, microbatch eight and accumulation eight. Scalar control peak LR is 0.0024494897427831783 with 40 warmup steps on the original 46,875-step schedule. The Chord initial velocity is zero and BF16 forces are saved. Input smear is learned and active. Branch output projections use the same seed-43 depth-scaled normal initialization.
+
+Removing the 12 token-indexed attention value tables (603,979,776 parameters) and their 12 gate matrices (1,728 parameters) changes the total to 751,829,247. Depth 23, width 1,536 and FFN width 6,144 stay fixed. The shared weights are initialized from the VE-on recipe. At the first eight-rank check, verify all retained parameters match the seeded VE-on reference, both optimizer group settings and the native smear are retained, and all 23 attention blocks run without VE. The removed parameters are absent from the trained model and optimizer.
+
+W&B display name: `chordres-no-attn-ve-smear-v0zero-scalar-lr0.00245-8k-seed42` in [the research project](https://wandb.ai/yibozhong657-none/nexttransformer-chordres). Compare against the VE-on, high-LR reference over its measured steps through 4,000. At 8,000 save the checkpoint and full CORE-22. An inference knockout and the effect of removing VE during training are separate measurements. A Chord-versus-Standard interaction requires a correspondingly matched no-VE Standard control.

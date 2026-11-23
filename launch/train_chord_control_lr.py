@@ -6,8 +6,8 @@ METHOD = "chordres_zero_save_force"
 
 
 def set_control_lr(model, optimizer):
-    if model.config.method != METHOD:
-        raise ValueError(f"This research recipe requires {METHOD}")
+    if model.config.method not in (METHOD, train_matched_normal.NO_VE_METHOD):
+        raise ValueError("This research recipe requires a saved-force ChordRes model starting from rest")
     controls = {id(p) for p in model.residual_maps.parameters()}
     groups = [g for g in optimizer.param_groups if any(id(p) in controls for p in g["params"])]
     if len(groups) != 1 or {id(p) for p in groups[0]["params"]} != controls:
@@ -38,6 +38,9 @@ def install(trainer):
             if self.run is not None:
                 self.run.config.update({"chord_control_peak_lr": CONTROL_PEAK_LR,
                                         "zero_velocity_reference": "1879c1a2"})
+                if config.method == train_matched_normal.NO_VE_METHOD:
+                    self.run.config.update({"attention_value_embeddings": False, "input_smear": True,
+                                            "ve_on_same_lr_reference": "13fb5703"})
 
     trainer.build_optimizer = build_optimizer
     trainer.software_identity = software
