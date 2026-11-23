@@ -1,0 +1,8 @@
+{
+  "name": "chordres_zero",
+  "family": "residual",
+  "title": "ChordRes from rest",
+  "options": {},
+  "shell": {"layers": 23, "mlp_width": 6144, "window_pattern": "L"},
+  "layer_multiple": 1
+}
