@@ -1,0 +1,7 @@
+# Four-stream mHC with nanochat routing and readout
+
+This research comparison ports the router and learned final readout of the [50M nanochat mHC run](https://github.com/yibozhong/nanochat/blob/8ffcee04fa5bb697394021fb0471450f82e28c2d/nanochat/nvidia_connections.py), retaining the 23-layer NextTransformer full-attention shell and the published mHC FFN width of 6,016. The native AdamW auxiliary group owns all route and readout parameters.
+
+Each attention and FFN reads from four streams and writes to four streams. The router projects an RMS-normalized concatenation with FP32 machine epsilon. Its weights draw from a zero-mean normal distribution with standard deviation 1/sqrt(4d), its three logit scales start at 0.01, pre-read biases are -log(3), post-write biases are zero, and the residual-mixing bias logits form the identity. Mixing runs 20 row-then-column log-space Sinkhorn updates in the nanochat input-to-output convention. The head learns four independent sigmoid read weights, starting near 1/4 each.
+
+Use the matched-normal research entry point to initialize both native branch output projections with std 0.02/sqrt(46), model seed 42 and projection seed 43. Each router gets an independent generator and leaves shared-backbone draws alone. This implementation uses the NextTransformer training stack and native tensor operations. It implements the nanochat routing equations; the numerical precision of individual operations can differ from TE's fused kernels. The model keeps NextTransformer's native optimizer and embedding facilities.

@@ -14,3 +14,5 @@ The separate eight-rank preflight verifies all 46 output projection matrices sta
 |---:|---:|---:|---:|
 | 0 | 3.16874171 | 3.16876593 | -0.00002422 |
 | 250 | 1.00873297 | 1.00738386 | +0.00134911 |
+
+The user stopped this run at logged step 610 for the nanochat-matched mHC comparison. The retained checkpoint is at step 500. That validation measured 0.91776016 BPB locally and 0.91664949 in the published run.

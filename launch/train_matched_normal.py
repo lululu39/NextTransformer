@@ -5,7 +5,7 @@ shell's projection initialization is changed only through this research entry po
 """
 import math
 
-METHODS = {"residual_standard", "chordres_zero_save_force", "chordres_vembed_save_force"}
+METHODS = {"mhc_nanochat_readout", "residual_standard", "chordres_zero_save_force", "chordres_vembed_save_force"}
 
 
 def initialization(seed, depth):

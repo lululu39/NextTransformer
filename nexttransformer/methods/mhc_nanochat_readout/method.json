@@ -1,0 +1,7 @@
+{
+  "name": "mhc_nanochat_readout",
+  "family": "residual",
+  "title": "mHC with nanochat routing and readout",
+  "options": {"streams": 4, "iterations": 20},
+  "shell": {"layers": 23, "mlp_width": 6016, "window_pattern": "L"}
+}

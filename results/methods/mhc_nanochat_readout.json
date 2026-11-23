@@ -1,0 +1,36 @@
+{
+  "id": "mhc_nanochat_readout",
+  "name": "mHC with nanochat routing and readout",
+  "family": "residual",
+  "tagline": "Four streams, near-uniform initial reads and a learned final readout.",
+  "description": "Four-stream mHC with the router initialization and final sigmoid readout from the 50M nanochat comparison. The full-attention shell and shared training schedule follow the published NextTransformer mHC configuration.",
+  "paperTitle": "mHC: Manifold-Constrained Hyper-Connections",
+  "paperUrl": "https://arxiv.org/abs/2512.24880",
+  "mechanism": [
+    "Four streams and one RMS-normalized projection per sublayer",
+    "Learned sigmoid reads, post-write weights and a 20-iteration log-space Sinkhorn mix",
+    "Input-dependent final read from the four streams"
+  ],
+  "limitations": "Research comparison with random attention-output and FFN down projections. Routing uses native tensor operators implementing the nanochat equations; kernel rounding can differ from Transformer Engine.",
+  "diagram": "custom",
+  "architecture": {
+    "kind": "custom",
+    "nodes": [
+      "Token embedding",
+      "Four residual streams",
+      "mHC read, branch, write",
+      "Learned stream readout",
+      "LM head"
+    ],
+    "loop": false
+  },
+  "blocks": 23,
+  "ffn": 6016,
+  "params": 1353575399,
+  "flops": 4.6746190338027915,
+  "error": 0.04752823283165064,
+  "codeUrl": "https://github.com/lululu39/NextTransformer/tree/chordres-zero/nexttransformer/methods/mhc_nanochat_readout",
+  "cohort": "reference-v1",
+  "sourceUrl": "https://github.com/lululu39/NextTransformer/blob/chordres-zero/nexttransformer/methods/mhc_nanochat_readout/README.md",
+  "costModel": "reference-aten-math-v2"
+}
