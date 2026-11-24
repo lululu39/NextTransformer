@@ -21,6 +21,16 @@ admission and within 2% cumulatively. Never change any of these to help one meth
 - Select candidates with training loss or the dev split (`shard_06541.parquet`). The validation shard and CORE-22
   are reserved for the formal run.
 
+## Chord research defaults on this fork
+
+- For new Chord comparisons use the native zero initialization of attention
+  output and MLP down projections. Use the official optimizer initialization
+  and record any explicitly requested random-projection control separately.
+- The current h-only research line uses three per-token coefficients: a signed
+  lookahead, a single positive position step, and a sigmoid velocity retention.
+  Use validation BPB at shared updates to decide the 2,000-update screen.
+  Preserve each historical run's saved initialization and settings.
+
 ## Running things
 
 - `python -m nexttransformer.train` runs in research mode by default; leaderboard runs need `--formal` and an

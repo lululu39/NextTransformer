@@ -20,8 +20,9 @@ def set_control_lr(model, optimizer, peak_lr=CONTROL_PEAK_LR):
     return group["initial_lr"]
 
 
-def install(trainer, *, native_control_lr=False):
-    train_matched_normal.install(trainer)
+def install(trainer, *, native_control_lr=False, matched_normal=True):
+    if matched_normal:
+        train_matched_normal.install(trainer)
     build, identity, tracker = trainer.build_optimizer, trainer.software_identity, trainer.ReferenceTracker
 
     append = trainer.append_event
@@ -42,6 +43,8 @@ def install(trainer, *, native_control_lr=False):
     def software(config, sparse_backend):
         record = identity(config, sparse_backend)
         record["chord_control_peak_lr"] = control_peak_lr
+        if not matched_normal:
+            record["branch_output_initialization"] = "native_zero"
         return record
 
     class ControlTracker(tracker):
@@ -50,6 +53,8 @@ def install(trainer, *, native_control_lr=False):
             if self.run is not None:
                 self.run.config.update({"chord_control_peak_lr": control_peak_lr,
                                         "zero_velocity_reference": "1879c1a2"})
+                if not matched_normal:
+                    self.run.config.update({"branch_output_initialization": "native_zero"})
                 if config.method in ("chordres_token_controls", "chordres_token_controls_vnorm", "chordres_token_controls_joint_rms", "chordres_joint_gate_bounded"):
                     self.run.config.update({"token_control_input": "pre-sublayer position and velocity",
                                             "token_control_weight_init": 0., "static_control_run": "a710a057",
