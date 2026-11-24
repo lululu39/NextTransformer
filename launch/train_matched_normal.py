@@ -10,7 +10,11 @@ NO_VE_METHOD = "chordres_no_ve_save_force"
 
 HEAD_LOOKAHEAD_METHOD = "chordres_head_lookahead"
 
-NO_VE_CONTROLS = {NO_VE_METHOD: "chordres_zero_save_force", "residual_standard_no_ve": "residual_standard"}
+NO_VE_CONTROLS = {
+    NO_VE_METHOD: "chordres_zero_save_force",
+    "residual_standard_no_ve": "residual_standard",
+    "mhc_nanochat_no_ve": "mhc_nanochat_readout",
+}
 
 METHODS = {*NO_VE_CONTROLS, HEAD_LOOKAHEAD_METHOD, "mhc_nanochat_readout", "residual_standard", "chordres_zero_save_force", "chordres_vembed_save_force"}
 
@@ -39,7 +43,8 @@ def build_matched_model(build, config, device, seed):
     if config.method in NO_VE_CONTROLS:
         # Removing VE gates changes the native initialization RNG sequence. Seed
         # the shared tensors from the VE-on control and preserve its final RNG state.
-        control_config = replace(config, method=NO_VE_CONTROLS[config.method], options=())
+        control_options = {name: value for name, value in config.options if name != "attention_value_embeddings"}
+        control_config = replace(config, method=NO_VE_CONTROLS[config.method], options=control_options)
         control = build(control_config, device, seed=seed)
         shared = {name: weight for name, weight in control.state_dict().items()
                   if not name.startswith("value_embeds.") and ".ve_gate." not in name}

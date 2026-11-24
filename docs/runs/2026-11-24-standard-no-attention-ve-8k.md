@@ -9,3 +9,5 @@ The [preceding head-lookahead run](https://wandb.ai/yibozhong657-none/nexttransf
 ## First trained validation
 
 At step 250, the [local no-VE Standard run](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/ff39681c) measured 1.04091092 BPB against 1.03143516 for the matched no-VE ChordRes, a Standard-minus-Chord difference of +0.00947576. Both used 41,943,040 validation tokens at this update. This is the first trained comparison point.
+
+The run stopped at its complete step-1,000 checkpoint to hand off to the [no-VE mHC comparison](2026-11-24-mhc-no-attention-ve-8k.md). Standard measured 0.869074 BPB and Chord 0.860166 BPB at that boundary.

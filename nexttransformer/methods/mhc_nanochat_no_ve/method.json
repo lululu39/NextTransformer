@@ -1,0 +1,15 @@
+{
+  "name": "mhc_nanochat_no_ve",
+  "family": "residual",
+  "title": "Nanochat-style mHC without attention value embeddings",
+  "options": {
+    "streams": 4,
+    "iterations": 20,
+    "attention_value_embeddings": false
+  },
+  "shell": {
+    "layers": 23,
+    "mlp_width": 6016,
+    "window_pattern": "L"
+  }
+}
