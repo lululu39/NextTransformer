@@ -6,7 +6,7 @@ METHOD = "chordres_zero_save_force"
 
 
 def set_control_lr(model, optimizer, peak_lr=CONTROL_PEAK_LR):
-    if model.config.method not in (METHOD, "chordres_honly_single_step", "chordres_honly_scalar_recipe", "chordres_honly_free", "chordres_joint_gate_bounded", "chordres_token_controls_joint_rms", "chordres_token_controls_vnorm", "chordres_token_controls", "chordres_velocity_gains", "chordres_ve_turn", train_matched_normal.NO_VE_METHOD, train_matched_normal.HEAD_LOOKAHEAD_METHOD):
+    if model.config.method not in (METHOD, "chordres_honly_single_step", "chordres_honly_scalar_recipe", "chordres_honly_free", "chordres_joint_gate_bounded", "chordres_token_controls_joint_rms", "chordres_token_controls_vnorm", "chordres_token_controls", "chordres_raw_force", "chordres_velocity_gains", "chordres_ve_turn", train_matched_normal.NO_VE_METHOD, train_matched_normal.HEAD_LOOKAHEAD_METHOD):
         raise ValueError("This research recipe requires a saved-force ChordRes model starting from rest")
     controls = {id(p) for p in model.residual_maps.parameters()}
     groups = [g for g in optimizer.param_groups if any(id(p) in controls for p in g["params"])]
@@ -32,7 +32,7 @@ def install(trainer, *, native_control_lr=False, matched_normal=True):
 
     def build_optimizer(model, train):
         nonlocal head_rho, gain_model, control_peak_lr
-        if model.config.method == "chordres_velocity_gains":
+        if model.config.method in ("chordres_velocity_gains", "chordres_raw_force"):
             gain_model = model
         if model.config.method == train_matched_normal.HEAD_LOOKAHEAD_METHOD:
             head_rho = model.residual_maps[-1].rho
@@ -82,10 +82,12 @@ def install(trainer, *, native_control_lr=False, matched_normal=True):
                 if config.method == "chordres_token_controls_vnorm":
                     from nexttransformer.methods.chordres_token_controls_vnorm import GATE_EPS
                     self.run.config.update({"velocity_gate_rms_eps": GATE_EPS, "raw_velocity_reference": "81a3c5bc"})
-                if config.method == "chordres_velocity_gains":
+                if config.method in ("chordres_velocity_gains", "chordres_raw_force"):
                     self.run.config.update({"velocity_gains": "direct trainable parallel and perpendicular gains",
                                             "gamma_parallel_init": .5, "gamma_perp_init": .5,
                                             "velocity_rule_reference": "13fb5703", "head_lookahead": False})
+                if config.method == "chordres_raw_force":
+                    self.run.config.update({"force_normalization": "none", "normalized_force_reference": "a710a057"})
                 if config.method == "chordres_ve_turn":
                     self.run.config.update({"full_perpendicular_velocity_at": "VE-enabled attention only",
                                             "matched_velocity_rule_reference": "13fb5703",

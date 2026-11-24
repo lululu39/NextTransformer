@@ -1,0 +1,5 @@
+# Force normalization ablation on the best static Chord
+
+The [normalized-force control](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/a710a057) reached 0.812241 validation BPB at update 2,000. Train a fresh static model on the same seed-42 token stream, with seed-43 random attention output and MLP down projections, six static Chord coefficients per consumed site and the high control AdamW peak LR 0.0024494897427831783. The paired model changes only the target of the position update from N(F) to the raw BF16 F. The position retraction, tangent projection, initial velocity and native branch input norms remain as in the control. Model parameters and optimizer settings match.
+
+Use eight H100 ranks, B8 per rank, eight accumulation steps and 2,048-token context. The stop is 2,000 updates on the original 46,875-update schedule. Evaluate validation BPB every 250 steps and report raw minus normalized BPB. A negative value favors raw force. Retain a resumable checkpoint at 2,000 and the standing nonfinite/consecutive-high gradient capture and persistent GPU handoffs.

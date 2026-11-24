@@ -1,0 +1,3 @@
+# Raw-force static ChordRes
+
+The paired [static three-gain method](../chordres_velocity_gains/) computes the proposed displacement from the unit-RMS branch output. This method instead computes `delta = F - h` directly from each attention or MLP output. Both position step sizes operate on this displacement exactly as in the reference. Retract the resulting position to unit RMS, then apply the same three-gain velocity update and project onto the new tangent plane. The lookahead and branch RMSNorm remain active. In the raw-force write backward, the force receives the displacement gradient directly.
