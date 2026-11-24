@@ -15,3 +15,5 @@ The first training CE (10.397693648934364) and full gradient norm (5536.83544921
 Both runs selected FA3. In an isolated BF16 causal FA3 test, each of eight H100s repeated the forward/backward call three times with identical Q, K, V and upstream gradient (two 2,048-token sequences, 12 heads of dimension 128). Every forward output matched bitwise. Each repeat differed from the first in 43–101 components of dQ out of 6,291,456 per device, with maximum absolute difference 0.00048828125 across devices and repeats. The sampled dK and dV matched. This demonstrates a source of run-to-run rounding differences; the whole-network drift was not isolated to one operator.
 
 [Velocity and displacement alignment](2026-11-24-honly-ve-velocity-alignment.md) measures the paired VE effect at updates 500 and 1,000.
+
+[VE attention projection-only test](2026-11-24-honly-ve-projection-only.md) compares retaining old velocity to selectively omitting the VE displacement.
