@@ -6,7 +6,7 @@ METHOD = "chordres_zero_save_force"
 
 
 def set_control_lr(model, optimizer, peak_lr=CONTROL_PEAK_LR):
-    if model.config.method not in (METHOD, "chordres_joint_gate_bounded", "chordres_token_controls_joint_rms", "chordres_token_controls_vnorm", "chordres_token_controls", "chordres_velocity_gains", "chordres_ve_turn", train_matched_normal.NO_VE_METHOD, train_matched_normal.HEAD_LOOKAHEAD_METHOD):
+    if model.config.method not in (METHOD, "chordres_honly_free", "chordres_joint_gate_bounded", "chordres_token_controls_joint_rms", "chordres_token_controls_vnorm", "chordres_token_controls", "chordres_velocity_gains", "chordres_ve_turn", train_matched_normal.NO_VE_METHOD, train_matched_normal.HEAD_LOOKAHEAD_METHOD):
         raise ValueError("This research recipe requires a saved-force ChordRes model starting from rest")
     controls = {id(p) for p in model.residual_maps.parameters()}
     groups = [g for g in optimizer.param_groups if any(id(p) in controls for p in g["params"])]
@@ -54,6 +54,12 @@ def install(trainer, *, native_control_lr=False):
                     self.run.config.update({"token_control_input": "pre-sublayer position and velocity",
                                             "token_control_weight_init": 0., "static_control_run": "a710a057",
                                             "token_control_terminal_outputs": 3, "head_lookahead": False})
+                if config.method == "chordres_honly_free":
+                    from nexttransformer.methods.chordres_honly_free import GATE_EPS
+                    self.run.config.update({"token_control_input": "normalized pre-sublayer position only",
+                                            "gate_rms_eps": GATE_EPS, "control_activation": "identity",
+                                            "token_control_weight_init": 0., "token_control_terminal_outputs": 3,
+                                            "bounded_joint_reference": "ae5f6592", "head_lookahead": False})
                 if config.method == "chordres_joint_gate_bounded":
                     from nexttransformer.methods.chordres_joint_gate_bounded import GATE_EPS
                     self.run.config.update({"gate_normalization": "joint position and velocity", "gate_rms_eps": GATE_EPS,

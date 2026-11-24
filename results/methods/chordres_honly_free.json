@@ -1,0 +1,33 @@
+{
+  "id": "chordres_honly_free",
+  "name": "Position-only ChordRes with unrestricted token controls",
+  "family": "residual",
+  "tagline": "Normalized position generates signed read, position and velocity coefficients.",
+  "description": "A width-D affine map at each attention and MLP site reads normalized position. Its outputs directly control physical lookahead, position steps, velocity retention and parallel/perpendicular writes.",
+  "mechanism": [
+    "Normalized position conditions each affine token gate",
+    "The six consumed controls can take any real value",
+    "Fused Chord reads and writes retain the original physical velocity"
+  ],
+  "limitations": "Research run with matched random output projections and a high Chord learning rate.",
+  "diagram": "custom",
+  "architecture": {
+    "kind": "custom",
+    "nodes": [
+      "RMS-normalized position",
+      "Unrestricted coefficients",
+      "Physical lookahead and tangent write",
+      "Final h → LM head"
+    ],
+    "loop": false
+  },
+  "blocks": 23,
+  "ffn": 6144,
+  "params": 1356230169,
+  "flops": 4.687256303067375,
+  "error": 0.3179946696453939,
+  "codeUrl": "https://github.com/lululu39/NextTransformer/tree/chordres-zero/nexttransformer/methods/chordres_honly_free",
+  "sourceUrl": "https://github.com/lululu39/NextTransformer/blob/chordres-zero/nexttransformer/methods/chordres_honly_free/README.md",
+  "cohort": "reference-v1",
+  "costModel": "reference-aten-math-v2"
+}
