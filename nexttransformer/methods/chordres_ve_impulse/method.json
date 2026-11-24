@@ -1,0 +1,12 @@
+{
+  "name": "chordres_ve_impulse",
+  "family": "residual",
+  "title": "Static ChordRes with a direct token VE impulse",
+  "options": {},
+  "shell": {
+    "layers": 23,
+    "mlp_width": 6144,
+    "window_pattern": "L"
+  },
+  "layer_multiple": 1
+}

@@ -6,7 +6,7 @@ METHOD = "chordres_zero_save_force"
 
 
 def set_control_lr(model, optimizer, peak_lr=CONTROL_PEAK_LR):
-    if model.config.method not in (METHOD, "chordres_force_vector_step", "chordres_force_amplitude_step", "chordres_honly_single_step", "chordres_honly_scalar_recipe", "chordres_honly_free", "chordres_joint_gate_bounded", "chordres_token_controls_joint_rms", "chordres_token_controls_vnorm", "chordres_token_controls", "chordres_raw_force", "chordres_velocity_gains", "chordres_ve_turn", train_matched_normal.NO_VE_METHOD, train_matched_normal.HEAD_LOOKAHEAD_METHOD):
+    if model.config.method not in (METHOD, "chordres_ve_impulse", "chordres_force_vector_step", "chordres_force_amplitude_step", "chordres_honly_single_step", "chordres_honly_scalar_recipe", "chordres_honly_free", "chordres_joint_gate_bounded", "chordres_token_controls_joint_rms", "chordres_token_controls_vnorm", "chordres_token_controls", "chordres_raw_force", "chordres_velocity_gains", "chordres_ve_turn", train_matched_normal.NO_VE_METHOD, train_matched_normal.HEAD_LOOKAHEAD_METHOD):
         raise ValueError("This research recipe requires a saved-force ChordRes model starting from rest")
     controls = {id(p) for p in model.residual_maps.parameters()}
     groups = [g for g in optimizer.param_groups if any(id(p) in controls for p in g["params"])]
@@ -26,12 +26,15 @@ def install(trainer, *, native_control_lr=False, matched_normal=True):
     build, identity, tracker = trainer.build_optimizer, trainer.software_identity, trainer.ReferenceTracker
 
     append = trainer.append_event
+    ve_impulse_scale = None
     head_rho = None
     gain_model = None
     control_peak_lr = None if native_control_lr else CONTROL_PEAK_LR
 
     def build_optimizer(model, train):
-        nonlocal head_rho, gain_model, control_peak_lr
+        nonlocal head_rho, gain_model, control_peak_lr, ve_impulse_scale
+        if model.config.method == "chordres_ve_impulse":
+            ve_impulse_scale = model.residual_maps[0].ve_scale
         if model.config.method in ("chordres_velocity_gains", "chordres_raw_force"):
             gain_model = model
         if model.config.method == train_matched_normal.HEAD_LOOKAHEAD_METHOD:
@@ -70,6 +73,9 @@ def install(trainer, *, native_control_lr=False, matched_normal=True):
                                             "amplitude_weight_init": 0., "force_direction": "unit RMS",
                                             "velocity_write": "static beta * old + (1-beta) * displacement",
                                             "lookahead": "static mu"})
+                if config.method == "chordres_ve_impulse":
+                    self.run.config.update({"ve_impulse_reference": "13fb5703", "ve_impulse_scale_init": 0.,
+                                            "ve_impulse_scale_count": 1, "ve_impulse_input": "raw same-layer same-token lookup"})
                 if config.method == "chordres_honly_single_step":
                     self.run.config.update({"token_control_input": "normalized pre-sublayer position only",
                                             "gate_rms_eps": 1e-6, "velocity_write": "beta * old + (1-beta) * displacement",
@@ -113,6 +119,8 @@ def install(trainer, *, native_control_lr=False, matched_normal=True):
 
     def append_event(output, event):
         # Native rank-zero events subsequently feed both the JSONL and W&B.
+        if ve_impulse_scale is not None and event["event"] in ("train", "validation"):
+            event["ve_impulse_lambda"] = ve_impulse_scale.detach().item()
         if head_rho is not None and event["event"] == "train":
             event["head_rho"] = head_rho.detach().item()
         if gain_model is not None and event["event"] == "validation":

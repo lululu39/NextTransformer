@@ -1,0 +1,34 @@
+{
+  "id": "chordres_ve_impulse",
+  "name": "Static ChordRes with a direct VE impulse",
+  "family": "residual",
+  "tagline": "One shared signed gain writes token value embeddings into tangent velocity.",
+  "description": "On each VE-enabled attention layer the same raw token lookup contributes to velocity before projection onto the next tangent plane.",
+  "mechanism": [
+    "Static Chord position controls and complementary velocity mixing",
+    "Zero initial velocity and BF16 saved-force writes",
+    "One global signed VE gain initialized to zero"
+  ],
+  "limitations": "Uses the shared zero-initialized output projections and reference optimizer. The full leaderboard result requires the 46,875-update endpoint.",
+  "diagram": "custom",
+  "architecture": {
+    "kind": "custom",
+    "nodes": [
+      "Embedding and smear",
+      "Unit-RMS h, zero v",
+      "Chord read \u2192 attention \u2192 write",
+      "Chord read \u2192 FFN \u2192 write",
+      "Final h \u2192 LM head"
+    ],
+    "loop": false
+  },
+  "blocks": 23,
+  "ffn": 6144,
+  "params": 1355810752,
+  "flops": 4.680947972468353,
+  "error": 0.1829819810938771,
+  "codeUrl": "https://github.com/lululu39/NextTransformer/tree/chordres-zero/nexttransformer/methods/chordres_ve_impulse",
+  "sourceUrl": "https://github.com/lululu39/NextTransformer/blob/chordres-zero/nexttransformer/methods/chordres_ve_impulse/README.md",
+  "cohort": "reference-v1",
+  "costModel": "reference-aten-math-v2"
+}
