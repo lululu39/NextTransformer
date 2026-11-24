@@ -6,7 +6,7 @@ METHOD = "chordres_zero_save_force"
 
 
 def set_control_lr(model, optimizer, peak_lr=CONTROL_PEAK_LR):
-    if model.config.method not in (METHOD, "chordres_ve_impulse", "chordres_force_vector_step", "chordres_force_amplitude_step", "chordres_honly_single_step", "chordres_honly_scalar_recipe", "chordres_honly_free", "chordres_joint_gate_bounded", "chordres_token_controls_joint_rms", "chordres_token_controls_vnorm", "chordres_token_controls", "chordres_raw_force", "chordres_velocity_gains", "chordres_ve_turn", train_matched_normal.NO_VE_METHOD, train_matched_normal.HEAD_LOOKAHEAD_METHOD):
+    if model.config.method not in (METHOD, "chordres_ve_unit_impulse", "chordres_ve_impulse", "chordres_force_vector_step", "chordres_force_amplitude_step", "chordres_honly_single_step", "chordres_honly_scalar_recipe", "chordres_honly_free", "chordres_joint_gate_bounded", "chordres_token_controls_joint_rms", "chordres_token_controls_vnorm", "chordres_token_controls", "chordres_raw_force", "chordres_velocity_gains", "chordres_ve_turn", train_matched_normal.NO_VE_METHOD, train_matched_normal.HEAD_LOOKAHEAD_METHOD):
         raise ValueError("This research recipe requires a saved-force ChordRes model starting from rest")
     controls = {id(p) for p in model.residual_maps.parameters()}
     groups = [g for g in optimizer.param_groups if any(id(p) in controls for p in g["params"])]
@@ -73,6 +73,9 @@ def install(trainer, *, native_control_lr=False, matched_normal=True):
                                             "amplitude_weight_init": 0., "force_direction": "unit RMS",
                                             "velocity_write": "static beta * old + (1-beta) * displacement",
                                             "lookahead": "static mu"})
+                if config.method == "chordres_ve_unit_impulse":
+                    self.run.config.update({"ve_impulse_gain": 1.0, "ve_impulse_learnable": False,
+                                            "learned_gain_reference": "6645790a", "ve_impulse_reference": "13fb5703"})
                 if config.method == "chordres_ve_impulse":
                     self.run.config.update({"ve_impulse_reference": "13fb5703", "ve_impulse_scale_init": 0.,
                                             "ve_impulse_scale_count": 1, "ve_impulse_input": "raw same-layer same-token lookup"})

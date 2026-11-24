@@ -1,0 +1,7 @@
+# Fixed unit VE velocity write
+
+The [learnable-gain run](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/6645790a) stopped at the user's request after the gradient trace for update 715. The step-500 checkpoint was retained. Its BPB at updates 250 and 500 was 1.010524 and 0.915076. The corresponding [ordinary static Chord](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/13fb5703) values were 1.012786 and 0.915757.
+
+Start a fresh 2,000-update run in which all 12 VE attention writes add the same token's raw value embedding at unit strength, before projecting velocity. The original gated attention VE path is active. The new write has no trainable coefficient. The table retains its native initialization and optimizer group. Record paired BPB every 250 updates against the ordinary static Chord and where available against the stopped learnable-gain run.
+
+The model uses 23 blocks, width 1536, FFN 6144, zero initial velocity, saved BF16 force, seed 42 and matched random branch output projections from seed 43. The 183 static control entries use their existing peak LR of 0.0024494897427831783. Use the same ClimbMix revision and order, 2,048 context, B8 per GPU on eight H100s, eight accumulation steps, the original 46,875-update LR schedule and gradient stop. The resulting model has 1,355,810,751 parameters. The theoretical preflight is 4.680874 GFLOPs per input token, 0.1814% above the anchor.

@@ -1,0 +1,12 @@
+{
+  "name": "chordres_ve_unit_impulse",
+  "family": "residual",
+  "title": "Static ChordRes with unit VE velocity writes",
+  "options": {},
+  "shell": {
+    "layers": 23,
+    "mlp_width": 6144,
+    "window_pattern": "L"
+  },
+  "layer_multiple": 1
+}
