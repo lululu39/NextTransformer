@@ -5,7 +5,7 @@ CONTROL_PEAK_LR = 0.0024494897427831783
 METHOD = "chordres_zero_save_force"
 
 
-def set_control_lr(model, optimizer):
+def set_control_lr(model, optimizer, peak_lr=CONTROL_PEAK_LR):
     if model.config.method not in (METHOD, "chordres_joint_gate_bounded", "chordres_token_controls_joint_rms", "chordres_token_controls_vnorm", "chordres_token_controls", "chordres_velocity_gains", "chordres_ve_turn", train_matched_normal.NO_VE_METHOD, train_matched_normal.HEAD_LOOKAHEAD_METHOD):
         raise ValueError("This research recipe requires a saved-force ChordRes model starting from rest")
     controls = {id(p) for p in model.residual_maps.parameters()}
@@ -15,37 +15,40 @@ def set_control_lr(model, optimizer):
     group = groups[0]
     if group["kind"] != "adamw" or group["weight_decay"] != 0.:
         raise ValueError("Unexpected Chord control optimizer group")
-    group["lr"] = group["initial_lr"] = CONTROL_PEAK_LR
+    if peak_lr is not None:
+        group["lr"] = group["initial_lr"] = peak_lr
+    return group["initial_lr"]
 
 
-def install(trainer):
+def install(trainer, *, native_control_lr=False):
     train_matched_normal.install(trainer)
     build, identity, tracker = trainer.build_optimizer, trainer.software_identity, trainer.ReferenceTracker
 
     append = trainer.append_event
     head_rho = None
     gain_model = None
+    control_peak_lr = None if native_control_lr else CONTROL_PEAK_LR
 
     def build_optimizer(model, train):
-        nonlocal head_rho, gain_model
+        nonlocal head_rho, gain_model, control_peak_lr
         if model.config.method == "chordres_velocity_gains":
             gain_model = model
         if model.config.method == train_matched_normal.HEAD_LOOKAHEAD_METHOD:
             head_rho = model.residual_maps[-1].rho
         optimizer = build(model, train)
-        set_control_lr(model, optimizer)
+        control_peak_lr = set_control_lr(model, optimizer, None if native_control_lr else CONTROL_PEAK_LR)
         return optimizer
 
     def software(config, sparse_backend):
         record = identity(config, sparse_backend)
-        record["chord_control_peak_lr"] = CONTROL_PEAK_LR
+        record["chord_control_peak_lr"] = control_peak_lr
         return record
 
     class ControlTracker(tracker):
         def __init__(self, args, rank, config, train, state, source):
             super().__init__(args, rank, config, train, state, source)
             if self.run is not None:
-                self.run.config.update({"chord_control_peak_lr": CONTROL_PEAK_LR,
+                self.run.config.update({"chord_control_peak_lr": control_peak_lr,
                                         "zero_velocity_reference": "1879c1a2"})
                 if config.method in ("chordres_token_controls", "chordres_token_controls_vnorm", "chordres_token_controls_joint_rms", "chordres_joint_gate_bounded"):
                     self.run.config.update({"token_control_input": "pre-sublayer position and velocity",

@@ -1,0 +1,7 @@
+# Bounded Chord controls with the native mHC router learning rate
+
+Compare the [bounded Chord high-LR run](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/f0d32bb6) with a fresh run using the native NextTransformer auxiliary AdamW group. The joint h/v projection weights and trainable control biases use the same peak LR as the official mHC router: 0.0006 × sqrt(1048576 / 524288) = 0.000848528137423857, down from 0.0024494897427831783. The learning-rate schedule has a 40-update warmup. The group retains betas (0.9, 0.95), epsilon 1e-10 and zero weight decay.
+
+Use the same [bounded model configuration](../../configs/residual/chordres_joint_gate_bounded.json), input data order, random seed 42 and seed-43 output projections, BF16 saved-force kernels, B8 per rank, eight GPUs and eight accumulation steps. The target is 8,000 updates on the original 46,875-update schedule, validation BPB every 250 steps and CORE-22 at 8,000. Inherit the two-consecutive-10,000 gradient stop and persistent GPU leases. The [research launcher](../../launch/train_chord_native_lr.py) takes the control LR directly from the native group.
+
+The previous high-LR run stopped after logged update 650 and retained a full checkpoint at 500. At update 500 its training CE was 3.00116 and validation BPB was 0.917362. The static Chord control recorded 2.98919 and 0.914121.
