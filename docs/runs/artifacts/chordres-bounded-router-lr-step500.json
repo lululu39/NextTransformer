@@ -1,0 +1,147 @@
+{
+  "checkpoint_step": 500,
+  "high_lr": {
+    "controls": {
+      "mu": {
+        "near_low": 0.1401999100394871,
+        "near_high": 0.10273311449133832,
+        "near_either": 0.2429330245308254,
+        "mean": 0.33764806650035933
+      },
+      "alpha_perp": {
+        "near_low": 0.05274863865064538,
+        "near_high": 0.0,
+        "near_either": 0.05274863865064538,
+        "mean": 0.12086221092374834
+      },
+      "alpha_parallel": {
+        "near_low": 0.39562689739724866,
+        "near_high": 0.07456323374872623,
+        "near_either": 0.47019013114597485,
+        "mean": 0.2624760962324746
+      },
+      "beta": {
+        "near_low": 0.12108086480034722,
+        "near_high": 0.2786475287543403,
+        "near_either": 0.3997283935546875,
+        "mean": 0.5856831992650742
+      },
+      "gamma_parallel": {
+        "near_low": 0.37558407253689235,
+        "near_high": 0.3347659640842014,
+        "near_either": 0.7103500366210938,
+        "mean": 0.8530303316046706
+      },
+      "gamma_perp": {
+        "near_low": 0.11347774929470486,
+        "near_high": 0.11925625271267361,
+        "near_either": 0.23273400200737848,
+        "mean": 0.9142230484423365
+      }
+    },
+    "ce": {
+      "normal": 3.2348622009158134,
+      "scale_0.9": 3.2557530254125595,
+      "scale_1.1": 3.243864983320236,
+      "scale_mu_0.9": 3.2351228296756744,
+      "scale_alpha_0.9": 3.254985511302948,
+      "scale_gamma_0.9": 3.234988681972027
+    },
+    "tokens": 131072
+  },
+  "native_lr": {
+    "controls": {
+      "mu": {
+        "near_low": 0.021435447361158287,
+        "near_high": 0.029856640359629757,
+        "near_either": 0.05129208772078804,
+        "mean": 1.0672878127274779
+      },
+      "alpha_perp": {
+        "near_low": 0.0037539938221807065,
+        "near_high": 0.0,
+        "near_either": 0.0037539938221807065,
+        "mean": 0.15754615654170037
+      },
+      "alpha_parallel": {
+        "near_low": 0.4572913128396739,
+        "near_high": 0.006212317425271739,
+        "near_either": 0.4635036302649457,
+        "mean": 0.09738171296529405
+      },
+      "beta": {
+        "near_low": 0.006168450249565972,
+        "near_high": 0.2523501925998264,
+        "near_either": 0.25851864284939235,
+        "mean": 0.7619658772027863
+      },
+      "gamma_parallel": {
+        "near_low": 0.03484039306640625,
+        "near_high": 0.35386861165364586,
+        "near_either": 0.3887090047200521,
+        "mean": 1.3563237080968549
+      },
+      "gamma_perp": {
+        "near_low": 0.08539699978298611,
+        "near_high": 0.02340003119574653,
+        "near_either": 0.10879703097873264,
+        "mean": 0.6622584335810585
+      }
+    },
+    "ce": {
+      "normal": 3.204241245985031,
+      "scale_0.9": 3.2326042130589485,
+      "scale_1.1": 3.238158479332924,
+      "scale_mu_0.9": 3.204391412436962,
+      "scale_alpha_0.9": 3.230529733002186,
+      "scale_gamma_0.9": 3.204916790127754
+    },
+    "tokens": 131072
+  },
+  "fixed_upper_tail_write_sensitivity": {
+    "high": {
+      "tokens": 131072,
+      "baseline_ce": 3.2348622009158134,
+      "tail_delta": {
+        "parallel_up": {
+          "delta_ce": -1.6808509826660156e-05,
+          "increased_microbatches": 8
+        },
+        "parallel_down": {
+          "delta_ce": 1.720339059829712e-05,
+          "increased_microbatches": 17
+        },
+        "perp_up": {
+          "delta_ce": 1.6763806343078613e-05,
+          "increased_microbatches": 16
+        },
+        "perp_down": {
+          "delta_ce": 2.682209014892578e-06,
+          "increased_microbatches": 19
+        }
+      }
+    },
+    "native": {
+      "tokens": 131072,
+      "baseline_ce": 3.204241245985031,
+      "tail_delta": {
+        "parallel_up": {
+          "delta_ce": 7.67335295677185e-05,
+          "increased_microbatches": 24
+        },
+        "parallel_down": {
+          "delta_ce": 4.3354928493499756e-05,
+          "increased_microbatches": 20
+        },
+        "perp_up": {
+          "delta_ce": 2.1852552890777588e-05,
+          "increased_microbatches": 17
+        },
+        "perp_down": {
+          "delta_ce": 8.508563041687012e-05,
+          "increased_microbatches": 19
+        }
+      }
+    }
+  }
+}
