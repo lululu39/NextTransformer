@@ -16,7 +16,7 @@ NO_VE_CONTROLS = {
     "mhc_nanochat_no_ve": "mhc_nanochat_readout",
 }
 
-METHODS = {*NO_VE_CONTROLS, HEAD_LOOKAHEAD_METHOD, "mhc_nanochat_readout", "residual_standard", "chordres_zero_save_force", "chordres_vembed_save_force"}
+METHODS = {"chordres_ve_turn", *NO_VE_CONTROLS, HEAD_LOOKAHEAD_METHOD, "mhc_nanochat_readout", "residual_standard", "chordres_zero_save_force", "chordres_vembed_save_force"}
 
 
 def initialization(seed, depth):

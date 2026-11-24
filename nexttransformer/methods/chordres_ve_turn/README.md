@@ -1,0 +1,5 @@
+# Undamped turns at VE-enabled attention writes
+
+This model inherits the saved-force scalar ChordRes from rest. The attention input, VE lookup, branch, position update and final ordinary LM readout match the control. All MLP writes and the attention writes without VE use the control's existing kernels.
+
+At each of the twelve attention sites with VE, let n be the position after the ordinary Chord update. With the channel mean as the inner product, calculate u = v - mean(v*n)*n and d = (n-h) - mean((n-h)*n)*n. Decompose d into components parallel and perpendicular to u using max(mean(u*u), 1e-12) as denominator. The velocity is beta*u + (1-beta)*d_parallel + d_perpendicular. When u is zero, d_parallel is zero. The update uses the entire attention displacement and never decomposes the attention force into its contextual and lookup contributions. The calculation and its analytic backward run in FP32 in one fused Triton write; the position and velocity stored between sites are BF16. The new rule adds no parameters.

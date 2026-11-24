@@ -1,0 +1,12 @@
+{
+  "name": "chordres_ve_turn",
+  "family": "residual",
+  "title": "ChordRes with undamped perpendicular velocity updates at VE attention sites",
+  "options": {},
+  "shell": {
+    "layers": 23,
+    "mlp_width": 6144,
+    "window_pattern": "L"
+  },
+  "layer_multiple": 1
+}
