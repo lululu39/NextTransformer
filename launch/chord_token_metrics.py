@@ -6,7 +6,7 @@ def wrap_validation(evaluate):
     def measured(model, *args, **kwargs):
         amplitude = model.config.method == "chordres_force_amplitude_step"
         vector = model.config.method == "chordres_force_vector_step"
-        if kwargs["rank"] != 0 or (not (amplitude or vector) and model.config.method not in ("chordres_token_controls", "chordres_token_controls_vnorm", "chordres_token_controls_joint_rms", "chordres_joint_gate_bounded", "chordres_honly_free", "chordres_honly_scalar_recipe", "chordres_honly_single_step")):
+        if kwargs["rank"] != 0 or (not (amplitude or vector) and model.config.method not in ("chordres_token_controls", "chordres_token_controls_vnorm", "chordres_token_controls_joint_rms", "chordres_joint_gate_bounded", "chordres_honly_free", "chordres_honly_small_dynamic", "chordres_honly_scalar_recipe", "chordres_honly_single_step")):
             return evaluate(model, *args, **kwargs)
 
         dispersions = []

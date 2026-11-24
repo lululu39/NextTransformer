@@ -16,7 +16,7 @@ NO_VE_CONTROLS = {
     "mhc_nanochat_no_ve": "mhc_nanochat_readout",
 }
 
-METHODS = {"chordres_ve_unit_impulse", "chordres_ve_impulse", "chordres_honly_single_step", "chordres_honly_scalar_recipe", "chordres_honly_free", "chordres_joint_gate_bounded", "chordres_token_controls_joint_rms", "chordres_token_controls_vnorm", "chordres_token_controls", "chordres_raw_force", "chordres_velocity_gains", "chordres_ve_turn", *NO_VE_CONTROLS, HEAD_LOOKAHEAD_METHOD, "mhc_nanochat_readout", "residual_standard", "chordres_zero_save_force", "chordres_vembed_save_force"}
+METHODS = {"chordres_honly_small_dynamic", "chordres_ve_unit_impulse", "chordres_ve_impulse", "chordres_honly_single_step", "chordres_honly_scalar_recipe", "chordres_honly_free", "chordres_joint_gate_bounded", "chordres_token_controls_joint_rms", "chordres_token_controls_vnorm", "chordres_token_controls", "chordres_raw_force", "chordres_velocity_gains", "chordres_ve_turn", *NO_VE_CONTROLS, HEAD_LOOKAHEAD_METHOD, "mhc_nanochat_readout", "residual_standard", "chordres_zero_save_force", "chordres_vembed_save_force"}
 
 
 def initialization(seed, depth):

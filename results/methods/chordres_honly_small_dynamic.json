@@ -1,0 +1,33 @@
+{
+  "id": "chordres_honly_small_dynamic",
+  "name": "Static three-gain Chord with small h-only corrections",
+  "family": "residual",
+  "tagline": "A fixed 0.01 gain on per-token corrections to the three-gain static Chord logits.",
+  "description": "The h-only projection is zero at initialization. Every learned static control uses the peak LR of the static three-gain control, while the projection uses the native auxiliary AdamW rate.",
+  "mechanism": [
+    "Fused position-only projection before the static control activations",
+    "Fixed projection gain 0.01 with separate peak learning rates for biases and gate weights",
+    "Saved-force static three-gain Chord geometry, attention VE and smear"
+  ],
+  "limitations": "Research run with matched random output projections and a high Chord learning rate.",
+  "diagram": "custom",
+  "architecture": {
+    "kind": "custom",
+    "nodes": [
+      "Normalized position",
+      "Scalar-recipe token controls",
+      "Physical lookahead and tangent write",
+      "Final h \u2192 LM head"
+    ],
+    "loop": false
+  },
+  "blocks": 23,
+  "ffn": 6144,
+  "params": 1356230169,
+  "flops": 4.687257630067375,
+  "error": 0.3180230704774134,
+  "codeUrl": "https://github.com/lululu39/NextTransformer/tree/chordres-zero/nexttransformer/methods/chordres_honly_small_dynamic",
+  "sourceUrl": "https://github.com/lululu39/NextTransformer/blob/chordres-zero/nexttransformer/methods/chordres_honly_small_dynamic/README.md",
+  "cohort": "reference-v1",
+  "costModel": "reference-aten-math-v2"
+}
