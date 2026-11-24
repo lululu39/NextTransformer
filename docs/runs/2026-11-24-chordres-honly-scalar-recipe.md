@@ -56,3 +56,7 @@ The following RMS values are averaged over tokens and 45 consumed write sites. T
 [Paired measurements](artifacts/chordres-honly-control-sensitivity.json) include all 64 microbatches, streaming gate calibration and sensitivity to both position-step and velocity-write projections. The existing static control used a different router LR. Frozen-checkpoint sensitivities do not establish the cause of the training-curve crossover.
 
 <!-- end of relative CE diagnostics -->
+
+## Early stop after the trend reversed
+
+At 1,250 and 1,500 updates the position-only three-gain Chord scored 0.835122 and 0.827061 validation BPB, versus 0.834186 and 0.824801 for static three-gain Chord and 0.832332 and 0.823078 for official mHC. Training was stopped after logged update 1,630 under the user’s consecutive-loss-to-prior-Chord rule. The checkpoint at 1,500 is complete. The planned 2,000-update evaluation was superseded. The eight GPUs returned to their persistent holders.
