@@ -12,7 +12,15 @@ from nexttransformer.methods.chordres_token_controls.kernels import (
 from nexttransformer.methods.chordres_token_controls_joint_rms.kernels import (
     _gate_partials,
 )
-from . import GATE_EPS
+from . import GATE_EPS, INITIAL_ALPHA
+
+
+@triton.jit
+def _bounded_step(x, initial: tl.constexpr):
+    pivot = tl.maximum(x, 0.0)
+    numerator = initial * libdevice.exp(x - pivot)
+    complement = (1.0 - initial) * libdevice.exp(-pivot)
+    return libdevice.div_rn(numerator, numerator + complement)
 
 
 @triton.jit
@@ -32,6 +40,7 @@ def _token_read_forward(
     BT: tl.constexpr,
     BD: tl.constexpr,
     EPS: tl.constexpr,
+    ALPHA0: tl.constexpr,
 ):
     row = tl.program_id(0) * BT + tl.arange(0, BT)
     lane = tl.arange(0, BD)
@@ -42,8 +51,12 @@ def _token_read_forward(
     gate_inv = tl.rsqrt(tl.sum(h * h + v * v, 1) / (2 * D) + EPS)
     raw_mu = tl.load(MU) + gate_inv * _project(h, v, W, lane, D, 0)
     mu = 3.0 * libdevice.tanh(raw_mu / 3.0)
-    ap = tl.sigmoid(tl.load(STEPS) + gate_inv * _project(h, v, W, lane, D, 1))
-    al = tl.sigmoid(tl.load(STEPS + 1) + gate_inv * _project(h, v, W, lane, D, 2))
+    ap = _bounded_step(
+        tl.load(STEPS) + gate_inv * _project(h, v, W, lane, D, 1), ALPHA0
+    )
+    al = _bounded_step(
+        tl.load(STEPS + 1) + gate_inv * _project(h, v, W, lane, D, 2), ALPHA0
+    )
     if K == 6:
         beta = tl.sigmoid(tl.load(BETA) + gate_inv * _project(h, v, W, lane, D, 3))
         gp = 2.0 * tl.sigmoid(tl.load(GAINS) + gate_inv * _project(h, v, W, lane, D, 4))
@@ -167,6 +180,7 @@ class TokenRead(torch.autograd.Function):
             4,
             triton.next_power_of_2(dim),
             GATE_EPS,
+            INITIAL_ALPHA,
         )
         ctx.save_for_backward(h, v, weight, controls)
         return query, controls

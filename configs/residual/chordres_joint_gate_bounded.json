@@ -87,12 +87,12 @@
     "status": "theoretical_preflight_passed",
     "formula_version": "reference-aten-math-v2",
     "source_hash": "526665f29884790a864af16385b25ede583334737f923c96a66a270a12920eff",
-    "method_source_hash": "3d7f4a32fe6ef9ab5afa8073b6f24b17a782581c28ea1a643307140829dcb6a1",
+    "method_source_hash": "987fc5c4b15c5b81f71cbda3afd99ad8b1a6eecf9186f8b99375bb0b378eec57",
     "torch": "2.9.1+cu128",
     "dense_flops_per_token": 4672398325.44785,
-    "flops_per_token": 4690243259.465813,
-    "relative_error": 0.0038192236138712143,
+    "flops_per_token": 4690244179.465813,
+    "relative_error": 0.0038194205148920357,
     "cumulative_run_audit": "not_run",
-    "cost_record": "../../evidence/costs/chordres-joint-gate-bounded/chordres_joint_gate_bounded.json"
+    "cost_record": "../../evidence/costs/chordres-joint-gate-bounded-centered/chordres_joint_gate_bounded.json"
   }
 }

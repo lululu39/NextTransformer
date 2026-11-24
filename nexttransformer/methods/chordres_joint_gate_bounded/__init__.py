@@ -15,6 +15,10 @@ from nexttransformer.models.backbone import norm
 from nexttransformer.methods.chordres_token_controls_joint_rms import GATE_EPS
 
 
+# The original FP32 softplus bias evaluates to this precise value at a nominal step of 0.05.
+INITIAL_ALPHA = 0.049999985843896866
+
+
 def token_reference_read(h, v, weight, mu, steps, beta, gains):
     dtype = weight.dtype
     position, velocity = h.to(dtype), v.to(dtype)
@@ -22,7 +26,12 @@ def token_reference_read(h, v, weight, mu, steps, beta, gains):
     gate_inv = (mean_square + GATE_EPS).rsqrt()
     z = (F.linear(position, weight[:, 0]) + F.linear(velocity, weight[:, 1])) * gate_inv
     m = 3.0 * torch.tanh((z[..., :1] + mu) / 3.0)
-    alpha = (z[..., 1:3] + steps).sigmoid()
+    # Stable sigmoid in odds form, centered at the previous effective FP32 step.
+    raw_alpha = z[..., 1:3] + steps
+    pivot = raw_alpha.detach().clamp_min(0)
+    numerator = INITIAL_ALPHA * (raw_alpha - pivot).exp()
+    complement = (1.0 - INITIAL_ALPHA) * (-pivot).exp()
+    alpha = numerator / (numerator + complement)
     if beta is None:
         retention = torch.full_like(m, 0.5)
         gamma = torch.full_like(alpha, 0.5)
@@ -43,7 +52,7 @@ class BoundedGateSite(TokenSite):
     @torch.no_grad()
     def reset_parameters(self):
         super().reset_parameters()
-        self.steps.fill_(-math.log(19.0))
+        self.steps.zero_()
         if getattr(self, "velocity_gains", None) is not None:
             self.velocity_gains.fill_(-math.log(3.0))
 

@@ -1,9 +1,11 @@
+import math
 from dataclasses import replace
 import pytest
 import torch
 from nexttransformer.methods.chordres_joint_gate_bounded import (
     BoundedGateSite,
     GATE_EPS,
+    INITIAL_ALPHA,
     token_reference_read,
 )
 from nexttransformer.models.config import debug_config
@@ -16,7 +18,9 @@ def independent(h, v, site):
     x = torch.nn.functional.rms_norm(x, (x.shape[-1],), eps=GATE_EPS)
     z = torch.nn.functional.linear(x, site.token_weight.flatten(1))
     mu = 3 * ((z[..., :1] + site.mu) / 3).tanh()
-    alpha = (z[..., 1:3] + site.steps).sigmoid()
+    alpha = (
+        z[..., 1:3] + site.steps + math.log(INITIAL_ALPHA / (1 - INITIAL_ALPHA))
+    ).sigmoid()
     beta = (
         torch.full_like(mu, 0.5)
         if site.beta is None
