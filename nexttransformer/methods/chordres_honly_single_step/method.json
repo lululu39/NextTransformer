@@ -1,0 +1,12 @@
+{
+  "name": "chordres_honly_single_step",
+  "family": "residual",
+  "title": "Position-only Chord with one position step and one velocity retention",
+  "options": {},
+  "shell": {
+    "layers": 23,
+    "mlp_width": 6144,
+    "window_pattern": "L"
+  },
+  "layer_multiple": 1
+}

@@ -1,0 +1,19 @@
+{
+  "created_at": "2026-11-24T09:59:15.472670+00:00",
+  "source_hash": "526665f29884790a864af16385b25ede583334737f923c96a66a270a12920eff",
+  "formula_version": "reference-aten-math-v2",
+  "torch": "2.9.1+cu128",
+  "rows": [
+    {
+      "method": "chordres_honly_single_step",
+      "status": "theoretical_preflight_passed",
+      "parameters": 1356021137,
+      "ffn": 6144,
+      "physical_layers": 23,
+      "core_layers": 9,
+      "flops_per_token": 4681267524.276197,
+      "relative_error": 0.0018982111991696637,
+      "elapsed_seconds": 6.374425699934363
+    }
+  ]
+}
