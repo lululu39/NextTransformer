@@ -9,3 +9,7 @@ Evaluate BPB every 250 updates on 41,943,040 validation tokens. Before 2,000, tw
 The matched-normal variant passed preflight but hit a duplicate W&B configuration key before its first formal training update (run `23153c4c`). The active zero-init variant uses [the native-init launcher](../../launch/train_chord_zero_init.py). Token embeddings and other ordinary weights use the upstream initialization. At zero force, position-step or velocity-retention gradients can start at zero. The CUDA oracle tests nonzero forces and the full-model preflight checks the initial logits against the native static Chord.
 
 [Online training](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/69bbb7bd) uses source revision `9832166`. Native zero branch output weights and initial logit equality with static Chord were verified on the eight-GPU preflight. The calibrated model has 1,356,021,137 parameters and 4.681268 GFLOPs per input token (0.190% above the shared anchor).
+
+## Screen outcome
+
+Native-zero validation BPB was 0.997605 at update 250, 0.907599 at 500 and 0.869023 at 750. The respective best prior Chord values were 0.986739, 0.907240 and 0.868241. The deficit widened from 0.000359 to 0.000782 at the last two evaluations. The screen stopped at 750 with a full eight-rank checkpoint; the eight GPU memory holds were reacquired. Official mHC and AttnRes were 0.868252 and 0.864181 at 750.
