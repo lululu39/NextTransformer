@@ -1,0 +1,35 @@
+{
+  "id": "chordres_velocity_gains",
+  "name": "ChordRes with three velocity gains",
+  "family": "residual",
+  "tagline": "Old velocity retention and separate gains on parallel and perpendicular displacement.",
+  "description": "The position and branch paths follow saved-force ChordRes. The velocity update on the tangent plane independently weights the carried velocity and both displacement components at every attention/FFN site.",
+  "mechanism": [
+    "Unit-RMS hidden state and a per-token tangent velocity",
+    "Independent scalar controls for each attention and FFN site",
+    "BF16 force tensors retained on the GPU for the fused Chord backward",
+    "Independent learned displacement gains at the 45 sites consumed by the next sublayer"
+  ],
+  "limitations": "Matched-normal research initialization with a scalar LR override. The 8,000-update segment is an intermediate checkpoint.",
+  "diagram": "custom",
+  "architecture": {
+    "kind": "custom",
+    "nodes": [
+      "Embedding and smear",
+      "Unit-RMS h, zero v",
+      "Chord read → attention → write",
+      "Chord read → FFN → write",
+      "Final h → LM head"
+    ],
+    "loop": false
+  },
+  "blocks": 23,
+  "ffn": 6144,
+  "params": 1355810841,
+  "flops": 4.684172399470006,
+  "error": 0.2519920863345293,
+  "codeUrl": "https://github.com/lululu39/NextTransformer/tree/chordres-zero/nexttransformer/methods/chordres_velocity_gains",
+  "sourceUrl": "https://github.com/lululu39/NextTransformer/blob/chordres-zero/nexttransformer/methods/chordres_velocity_gains/README.md",
+  "cohort": "reference-v1",
+  "costModel": "reference-aten-math-v2"
+}
