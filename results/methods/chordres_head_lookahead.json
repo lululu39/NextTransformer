@@ -1,0 +1,35 @@
+{
+  "id": "chordres_head_lookahead",
+  "name": "ChordRes with terminal lookahead",
+  "family": "residual",
+  "tagline": "Read the final spherical state through its learned velocity lookahead.",
+  "description": "The Chord sublayers start from rest and retain BF16 forces. A separate zero-initialized scalar multiplies the terminal tangent velocity before the native final RMSNorm and LM head.",
+  "mechanism": [
+    "Unit-RMS hidden state and a per-token tangent velocity",
+    "Independent scalar controls for each attention and FFN site",
+    "BF16 force tensors retained on the GPU for the fused Chord backward",
+    "A scalar terminal velocity read before the shared final norm and LM head"
+  ],
+  "limitations": "The matched-normal high-control-LR comparison uses a research initialization and optimizer-group override.",
+  "diagram": "custom",
+  "architecture": {
+    "kind": "custom",
+    "nodes": [
+      "Embedding and smear",
+      "Unit-RMS h, zero v",
+      "Chord read → attention → write",
+      "Chord read → FFN → write",
+      "Final h + rho*v, RMSNorm and LM head"
+    ],
+    "loop": false
+  },
+  "blocks": 23,
+  "ffn": 6144,
+  "params": 1355810752,
+  "flops": 4.680875779468352,
+  "error": 0.18143688594207674,
+  "codeUrl": "https://github.com/lululu39/NextTransformer/tree/chordres-zero/nexttransformer/methods/chordres_head_lookahead",
+  "sourceUrl": "https://github.com/lululu39/NextTransformer/blob/chordres-zero/nexttransformer/methods/chordres_head_lookahead/README.md",
+  "cohort": "reference-v1",
+  "costModel": "reference-aten-math-v2"
+}

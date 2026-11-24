@@ -8,7 +8,9 @@ from dataclasses import replace
 
 NO_VE_METHOD = "chordres_no_ve_save_force"
 
-METHODS = {NO_VE_METHOD, "mhc_nanochat_readout", "residual_standard", "chordres_zero_save_force", "chordres_vembed_save_force"}
+HEAD_LOOKAHEAD_METHOD = "chordres_head_lookahead"
+
+METHODS = {HEAD_LOOKAHEAD_METHOD, NO_VE_METHOD, "mhc_nanochat_readout", "residual_standard", "chordres_zero_save_force", "chordres_vembed_save_force"}
 
 
 def initialization(seed, depth):

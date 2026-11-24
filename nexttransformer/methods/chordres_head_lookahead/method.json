@@ -1,0 +1,12 @@
+{
+  "name": "chordres_head_lookahead",
+  "family": "residual",
+  "title": "ChordRes from rest with a learned terminal velocity read",
+  "options": {},
+  "shell": {
+    "layers": 23,
+    "mlp_width": 6144,
+    "window_pattern": "L"
+  },
+  "layer_multiple": 1
+}
