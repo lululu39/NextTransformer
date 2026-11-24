@@ -1,0 +1,12 @@
+{
+  "name": "chordres_force_amplitude_step",
+  "family": "residual",
+  "title": "ChordRes with one branch-amplitude-conditioned position step",
+  "options": {},
+  "shell": {
+    "layers": 23,
+    "mlp_width": 6144,
+    "window_pattern": "L"
+  },
+  "layer_multiple": 1
+}

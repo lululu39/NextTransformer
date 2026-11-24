@@ -1,0 +1,33 @@
+{
+  "id": "chordres_force_amplitude_step",
+  "name": "Chord with a force-amplitude position step",
+  "family": "residual",
+  "tagline": "One amplitude-conditioned position step and static lookahead and retention.",
+  "description": "The position direction uses the unit-RMS branch output. Only the step size reads the original branch power through a scalar affine softplus. The velocity uses the complementary beta write.",
+  "mechanism": [
+    "Static scalar lookahead and retention",
+    "One positive token-dependent step from branch power",
+    "Spherical retraction and projected velocity mix"
+  ],
+  "limitations": "Research run with matched random output projections and a high Chord learning rate.",
+  "diagram": "custom",
+  "architecture": {
+    "kind": "custom",
+    "nodes": [
+      "Static lookahead",
+      "Attention or MLP",
+      "Force RMS and normalized direction",
+      "Amplitude-conditioned step and tangent velocity"
+    ],
+    "loop": false
+  },
+  "blocks": 23,
+  "ffn": 6144,
+  "params": 1355810751,
+  "flops": 4.679438502467584,
+  "error": 0.15067587413064576,
+  "codeUrl": "https://github.com/lululu39/NextTransformer/tree/chordres-zero/nexttransformer/methods/chordres_force_amplitude_step",
+  "sourceUrl": "https://github.com/lululu39/NextTransformer/blob/chordres-zero/nexttransformer/methods/chordres_force_amplitude_step/README.md",
+  "cohort": "reference-v1",
+  "costModel": "reference-aten-math-v2"
+}
