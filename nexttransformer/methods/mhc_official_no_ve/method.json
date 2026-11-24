@@ -1,0 +1,7 @@
+{
+  "name": "mhc_official_no_ve",
+  "family": "residual",
+  "title": "Official mHC without attention value embeddings",
+  "options": {"attention_value_embeddings": false},
+  "shell": {"layers": 23, "mlp_width": 6016, "window_pattern": "L"}
+}

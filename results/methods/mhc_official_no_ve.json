@@ -1,0 +1,35 @@
+{
+  "id": "mhc_official_no_ve",
+  "name": "Official mHC without attention VE",
+  "family": "residual",
+  "tagline": "Native four-stream mHC with the attention value tables removed.",
+  "description": "The native mHC implementation is used directly. Attention V is computed from the contextual hidden state and the standard learned input smear stays enabled. The final residual streams are summed.",
+  "paperTitle": "mHC: Manifold-Constrained Hyper-Connections",
+  "paperUrl": "https://arxiv.org/abs/2512.24880",
+  "mechanism": [
+    "Flattened 4×1536 stream with parameter-free RMSNorm and one 6144×24 projection for read, write and mixing logits",
+    "Read = σ, write = 2σ; residual mixing = 20 log-space Sinkhorn-Knopp normalizations (rows sum to one, columns approximately)",
+    "Four full-attention streams, 23 layers, FFN width 6016; native sum readout"
+  ],
+  "limitations": "A separate 8,000-update ablation using the current public mHC implementation. The local random-output-initialized Chord and Standard comparison points use a different branch initialization.",
+  "diagram": "custom",
+  "architecture": {
+    "kind": "custom",
+    "nodes": [
+      "Embedding ×4 streams",
+      "mHC Sinkhorn mixing",
+      "23 blocks",
+      "Sum → LM head"
+    ],
+    "loop": false
+  },
+  "blocks": 23,
+  "ffn": 6016,
+  "params": 749569314,
+  "flops": 4.674214720792986,
+  "error": 0.03887501061805576,
+  "codeUrl": "https://github.com/Interactive-Active-AI/NextTransformer/blob/main/nexttransformer/models/residual.py",
+  "cohort": "reference-v1",
+  "sourceUrl": "https://github.com/lululu39/NextTransformer/blob/chordres-zero/nexttransformer/methods/mhc_official_no_ve/README.md",
+  "costModel": "reference-aten-math-v2"
+}

@@ -1,0 +1,5 @@
+# Official mHC with attention VE removed
+
+The class inherits the public NextTransformer native mHC forward, routing, writes, terminal sum, initialization recipe and optimizer. Its constructor deletes only the alternating attention value vocabulary tables and their associated gates. All retained parameters start with the exact native seed-42 weights, including zero attention output and FFN down projections. The ordinary smear is active. The router projection is zero-initialized, gate scales start at 0.01, and the native per-site bias initialization and four-stream sum readout are preserved. Use the ordinary trainer with this ablation configuration and no research initialization or optimizer override.
+
+The cost reference has 23 layers, width 1,536 and FFN width 6,016. The new ablation has its own measured cost proof, model identifier and checkpoint directory. The code uses the public release's official log-space Sinkhorn, the implementation currently shipped for mHC. The historical leaderboard run switched to that implementation at step 31,500.

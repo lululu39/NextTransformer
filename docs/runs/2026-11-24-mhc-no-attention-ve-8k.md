@@ -9,3 +9,5 @@ Use seed 42 for the backbone, seed 43 for the depth-scaled random attention outp
 ## Startup measurements
 
 [Online run](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/f1a480a8). The eight-rank preflight completed two real optimizer updates. The auxiliary group contained the routers and final readout with peak LR 0.000848528137423857, zero weight decay and finite nonzero readout gradients. The initial backbone matched a same-shaped Standard reference. The training pass started freshly and measured 3.16854589 BPB before the first update. Training CE at step 10 was 7.181298. Validation events log `mhc_minus_chord` and `mhc_minus_standard` across common trained points, including 250, 500, 750 and 1,000.
+
+The nanochat-style mHC training was stopped at logged step 140. It was superseded by the [official mHC ablation](2026-11-24-official-mhc-no-ve.md); its metrics are kept under their original run ID.
