@@ -1,0 +1,33 @@
+{
+  "id": "chordres_joint_gate_bounded",
+  "name": "Joint-RMS ChordRes with bounded controls",
+  "family": "residual",
+  "tagline": "Token-dependent steps with bounded lookahead and velocity writes.",
+  "description": "The joint h/v gate predicts signed lookahead, positive position steps, retention and displacement gains through bounded activations at each sublayer.",
+  "mechanism": [
+    "Jointly normalized position and velocity condition the bounded sublayer controls",
+    "Zero-start projections preserve the initial static model",
+    "Triton fuses per-token controls into the saved-force Chord path"
+  ],
+  "limitations": "Research run with matched random output projections and a high Chord learning rate.",
+  "diagram": "custom",
+  "architecture": {
+    "kind": "custom",
+    "nodes": [
+      "Position and velocity",
+      "Per-token coefficients",
+      "Chord read, branch and tangent write",
+      "Final h → LM head"
+    ],
+    "loop": false
+  },
+  "blocks": 23,
+  "ffn": 6144,
+  "params": 1356649497,
+  "flops": 4.690243259465813,
+  "error": 0.38192236138712143,
+  "codeUrl": "https://github.com/lululu39/NextTransformer/tree/chordres-zero/nexttransformer/methods/chordres_joint_gate_bounded",
+  "sourceUrl": "https://github.com/lululu39/NextTransformer/blob/chordres-zero/nexttransformer/methods/chordres_joint_gate_bounded/README.md",
+  "cohort": "reference-v1",
+  "costModel": "reference-aten-math-v2"
+}

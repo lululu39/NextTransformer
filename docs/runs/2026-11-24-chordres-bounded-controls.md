@@ -1,0 +1,7 @@
+# Joint-RMS ChordRes with bounded token controls
+
+This fresh 8,000-update comparison inherits the [unbounded joint-RMS run](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/9fda8c33). Its gradient norm rose from 2.10 at update 100 to 842 at 130 and 6.38e9 at 170. Use the bounded lookahead, position gains, retention and displacement-to-velocity gains described in the [method](../../nexttransformer/methods/chordres_joint_gate_bounded/). Both h and v still condition the gate. The effective initialization is preserved, with the raw alpha and gamma biases translated into the new parameterization.
+
+Train the 23-layer, width-1,536, FFN-6,144 model with 12 attention value embeddings, input smear, zero initial velocity, ordinary LM head, normal seed-43 output projections, seed 42 and saved BF16 forces. Keep the high control-group AdamW peak LR of 0.0024494897427831783. Use eight GPUs, B8 and eight accumulation steps, 2,048-token context, the identical ClimbMix stream and 46,875-update schedule, and a target of 8,000 updates. Validation BPB runs every 250 updates, with CORE-22 at 8,000.
+
+The [gradient stop](../../launch/chord_gradient_stop.py) records the global gradient norm each update. Two consecutive norms at or above 10,000, or a nonfinite norm, stop the job before the next parameter update. The failing model state and the final rank-zero microbatch are saved for read-only diagnosis. No gradient clipping or automatic replay is added.

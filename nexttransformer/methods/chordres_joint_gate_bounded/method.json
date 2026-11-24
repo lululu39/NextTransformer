@@ -1,0 +1,12 @@
+{
+  "name": "chordres_joint_gate_bounded",
+  "family": "residual",
+  "title": "Joint-RMS token-dependent ChordRes with bounded controls",
+  "options": {},
+  "shell": {
+    "layers": 23,
+    "mlp_width": 6144,
+    "window_pattern": "L"
+  },
+  "layer_multiple": 1
+}
