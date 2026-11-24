@@ -34,3 +34,25 @@ On eight validation streams (131,072 tokens total), record the RMS of the raw at
 | all | 1.698 | 0.170 | 0.123 | 0.176 |
 
 On the first 32,768 validation tokens, multiplying the output of every attention and MLP by 8 at the Chord write gave bitwise identical final hidden states on all eight GPUs. The measurement establishes scale invariance in these examples. It does not measure the accuracy effect of training a step-size gate with access to branch magnitude.
+
+## Frozen-checkpoint tests of the relative CE drift
+
+Every column uses the same 262,144 validation tokens at each model snapshot. Token projections are centered on mean per-sublayer gate logits from separate preceding validation rows (131,072 calibration tokens). Centered rescaling preserves raw logit means on the calibration inputs and the original control activations. The zero-variation condition uses these fixed mean logits at every token. Direct write interventions act on effective displacement gains after the gate read. All perturbations are inference only. The reported deltas are the change in mean token CE relative to the unmodified checkpoint.
+
+| Update | CE | Remove token modulation | Reduce modulation 10% | Increase modulation 10% | Cap parallel write gain at ±2 | Cap perpendicular write gain at ±2 |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 500 | 2.930214 | +0.619715 | +0.004616 | +0.004272 | +0.002287 | +0.029057 |
+| 1,000 | 2.723395 | +0.619019 | +0.004011 | +0.002704 | +0.000824 | +0.042557 |
+| 1,500 | 2.648907 | +0.591319 | +0.003293 | +0.002436 | +0.000721 | +0.052095 |
+
+The following RMS values are averaged over tokens and 45 consumed write sites. The displacement-weighted parallel gain divides the RMS of the parallel write by the RMS of the incoming parallel displacement, after averaging both. It accounts for gains that multiply nearly zero displacements.
+
+| Update | Mean absolute parallel gain | Displacement-weighted parallel gain | Parallel write RMS | Perpendicular write RMS |
+| ---: | ---: | ---: | ---: | ---: |
+| 500 | 6.5914 | 1.4373 | 0.01646 | 0.16780 |
+| 1,000 | 8.2007 | 1.3548 | 0.01852 | 0.18635 |
+| 1,500 | 8.7995 | 1.2385 | 0.02004 | 0.19796 |
+
+[Paired measurements](artifacts/chordres-honly-control-sensitivity.json) include all 64 microbatches, streaming gate calibration and sensitivity to both position-step and velocity-write projections. The existing static control used a different router LR. Frozen-checkpoint sensitivities do not establish the cause of the training-curve crossover.
+
+<!-- end of relative CE diagnostics -->

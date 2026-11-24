@@ -1,0 +1,401 @@
+{
+  "500": {
+    "centered_gate": {
+      "modes": {
+        "normal": {
+          "ce": 2.930214114487171,
+          "change": 0.0,
+          "higher": 0,
+          "batches": 64
+        },
+        "flat": {
+          "ce": 3.549929577857256,
+          "change": 0.6197154633700848,
+          "higher": 64,
+          "batches": 64
+        },
+        "weaker": {
+          "ce": 2.9348299596458673,
+          "change": 0.004615845158696175,
+          "higher": 62,
+          "batches": 64
+        },
+        "stronger": {
+          "ce": 2.9344864673912525,
+          "change": 0.004272352904081345,
+          "higher": 63,
+          "batches": 64
+        },
+        "mu_weaker": {
+          "ce": 2.930411834269762,
+          "change": 0.0001977197825908661,
+          "higher": 37,
+          "batches": 64
+        },
+        "alpha_weaker": {
+          "ce": 2.934319945052266,
+          "change": 0.004105830565094948,
+          "higher": 61,
+          "batches": 64
+        },
+        "beta_weaker": {
+          "ce": 2.9301454555243254,
+          "change": -6.865896284580231e-05,
+          "higher": 26,
+          "batches": 64
+        },
+        "gamma_weaker": {
+          "ce": 2.930743409320712,
+          "change": 0.0005292948335409164,
+          "higher": 52,
+          "batches": 64
+        }
+      },
+      "tokens": 262144,
+      "sha256": [
+        "8305b3830397e9420f881e73a826a702dd2a7601a303896ede5c7109ab2c0118",
+        "2079ed9874f3fa81466b1118bf53459bb50a2bf18876dd91a388740266292fe7",
+        "2d7af38cdf1c746502ef8deb0ff5e89f0db9c4caf328c059cdb7285bab7d58a7",
+        "0e8dff515fb75c07d24949780574bffe5d991d9ad3e9bb3bee160b543d09c9b5",
+        "d754caa83fb2765b4dd6e5fda00de7fdc16161984018a68c849f8fec4078b64b",
+        "9474ca5ed37c8e958066c8a9feceed5a434805949cf05d18116e401f80220ff0",
+        "b902bbc84f75a66ea21044f94a276c343d70da775cff27c543949386ccbd8e32",
+        "b0e7d5c48ad6b16242e04567caadfc9f0a1af425194949c9e3e8d0fad3254776"
+      ],
+      "alpha_perp_below_0.01": 0.0016411491062330163,
+      "alpha_parallel_below_0.01": 0.4140855540399966,
+      "beta_outer_percent": 0.22166375054253473,
+      "gamma_parallel_abs_over2": 0.5925038655598959,
+      "gamma_perp_abs_over2": 0.22955220540364582,
+      "gamma_parallel_mean_abs": 6.589139217186943,
+      "gamma_perp_mean_abs": 1.514137753412747
+    },
+    "direct_write": {
+      "modes": {
+        "normal": {
+          "ce": 2.930214114487171,
+          "change": 0.0,
+          "higher": 0
+        },
+        "par_0.9": {
+          "ce": 2.9303548485040665,
+          "change": 0.0001407340168952942,
+          "higher": 43
+        },
+        "par_1.1": {
+          "ce": 2.930248733609915,
+          "change": 3.461912274360657e-05,
+          "higher": 37
+        },
+        "perp_0.9": {
+          "ce": 2.9326561093330383,
+          "change": 0.002441994845867157,
+          "higher": 63
+        },
+        "perp_1.1": {
+          "ce": 2.929992752149701,
+          "change": -0.00022136233747005463,
+          "higher": 25
+        },
+        "cap_par": {
+          "ce": 2.9325010515749454,
+          "change": 0.0022869370877742767,
+          "higher": 63
+        },
+        "cap_perp": {
+          "ce": 2.9592707380652428,
+          "change": 0.029056623578071594,
+          "higher": 64
+        }
+      },
+      "physical": {
+        "mean_abs_gp": 6.591449116628136,
+        "mean_abs_gt": 1.5142444906975199,
+        "mean_dpara": 0.011448965638154281,
+        "mean_dperp": 0.14571801726346176,
+        "mean_write_para": 0.016455390668560974,
+        "mean_write_perp": 0.16779774243334025,
+        "mean_retention_magnitude": 0.2460198091431972,
+        "mean_speed": 0.3239210400711598,
+        "mean_signed_gp": 6.494569965618537,
+        "mean_signed_gt": 0.7432450209420564
+      },
+      "gp_weighted": 1.437281863587966,
+      "gt_weighted": 1.1515236453564819
+    }
+  },
+  "1000": {
+    "centered_gate": {
+      "modes": {
+        "normal": {
+          "ce": 2.7233945094048977,
+          "change": 0.0,
+          "higher": 0,
+          "batches": 64
+        },
+        "flat": {
+          "ce": 3.342413507401943,
+          "change": 0.6190189979970455,
+          "higher": 64,
+          "batches": 64
+        },
+        "weaker": {
+          "ce": 2.7274053189903498,
+          "change": 0.00401080958545208,
+          "higher": 63,
+          "batches": 64
+        },
+        "stronger": {
+          "ce": 2.726098271086812,
+          "change": 0.0027037616819143295,
+          "higher": 58,
+          "batches": 64
+        },
+        "mu_weaker": {
+          "ce": 2.723498024046421,
+          "change": 0.0001035146415233612,
+          "higher": 39,
+          "batches": 64
+        },
+        "alpha_weaker": {
+          "ce": 2.7268167082220316,
+          "change": 0.0034221988171339035,
+          "higher": 62,
+          "batches": 64
+        },
+        "beta_weaker": {
+          "ce": 2.7234619297087193,
+          "change": 6.742030382156372e-05,
+          "higher": 33,
+          "batches": 64
+        },
+        "gamma_weaker": {
+          "ce": 2.7238212507218122,
+          "change": 0.0004267413169145584,
+          "higher": 52,
+          "batches": 64
+        },
+        "rollback": {
+          "ce": 2.7230986952781677,
+          "change": -0.0002958141267299652,
+          "higher": 20,
+          "batches": 64
+        },
+        "advance": {
+          "ce": 2.7247663270682096,
+          "change": 0.0013718176633119583,
+          "higher": 62,
+          "batches": 64
+        }
+      },
+      "tokens": 262144,
+      "sha256": [
+        "8305b3830397e9420f881e73a826a702dd2a7601a303896ede5c7109ab2c0118",
+        "2079ed9874f3fa81466b1118bf53459bb50a2bf18876dd91a388740266292fe7",
+        "2d7af38cdf1c746502ef8deb0ff5e89f0db9c4caf328c059cdb7285bab7d58a7",
+        "0e8dff515fb75c07d24949780574bffe5d991d9ad3e9bb3bee160b543d09c9b5",
+        "d754caa83fb2765b4dd6e5fda00de7fdc16161984018a68c849f8fec4078b64b",
+        "9474ca5ed37c8e958066c8a9feceed5a434805949cf05d18116e401f80220ff0",
+        "b902bbc84f75a66ea21044f94a276c343d70da775cff27c543949386ccbd8e32",
+        "b0e7d5c48ad6b16242e04567caadfc9f0a1af425194949c9e3e8d0fad3254776"
+      ],
+      "alpha_perp_below_0.01": 1.1775804602581522e-05,
+      "alpha_parallel_below_0.01": 0.370231296705163,
+      "beta_outer_percent": 0.20120171440972223,
+      "gamma_parallel_abs_over2": 0.5491012573242188,
+      "gamma_perp_abs_over2": 0.22930145263671875,
+      "gamma_parallel_mean_abs": 8.187597312852525,
+      "gamma_perp_mean_abs": 1.5647743993751144
+    },
+    "direct_write": {
+      "modes": {
+        "normal": {
+          "ce": 2.7233945094048977,
+          "change": 0.0,
+          "higher": 0
+        },
+        "par_0.9": {
+          "ce": 2.7233557272702456,
+          "change": -3.8782134652137756e-05,
+          "higher": 29
+        },
+        "par_1.1": {
+          "ce": 2.723406473174691,
+          "change": 1.1963769793510437e-05,
+          "higher": 31
+        },
+        "perp_0.9": {
+          "ce": 2.723852541297674,
+          "change": 0.00045803189277648926,
+          "higher": 43
+        },
+        "perp_1.1": {
+          "ce": 2.72535602375865,
+          "change": 0.0019615143537521362,
+          "higher": 64
+        },
+        "cap_par": {
+          "ce": 2.724218539893627,
+          "change": 0.0008240304887294769,
+          "higher": 53
+        },
+        "cap_perp": {
+          "ce": 2.7659511007368565,
+          "change": 0.04255659133195877,
+          "higher": 64
+        }
+      },
+      "physical": {
+        "mean_abs_gp": 8.200726436944931,
+        "mean_abs_gt": 1.5635463250635098,
+        "mean_dpara": 0.013669109116178722,
+        "mean_dperp": 0.16087144373554502,
+        "mean_write_para": 0.01851865088543914,
+        "mean_write_perp": 0.1863461900973828,
+        "mean_retention_magnitude": 0.2686751649210163,
+        "mean_speed": 0.3636259403236209,
+        "mean_signed_gp": 7.862767134686877,
+        "mean_signed_gt": 0.5042483115421521
+      },
+      "gp_weighted": 1.3547811147048723,
+      "gt_weighted": 1.1583546822872768
+    }
+  },
+  "1500": {
+    "centered_gate": {
+      "modes": {
+        "normal": {
+          "ce": 2.648907406255603,
+          "change": 0.0,
+          "higher": 0,
+          "batches": 64
+        },
+        "flat": {
+          "ce": 3.2402261905372143,
+          "change": 0.5913187842816114,
+          "higher": 64,
+          "batches": 64
+        },
+        "weaker": {
+          "ce": 2.652200222015381,
+          "change": 0.0032928157597780228,
+          "higher": 62,
+          "batches": 64
+        },
+        "stronger": {
+          "ce": 2.6513438429683447,
+          "change": 0.002436436712741852,
+          "higher": 59,
+          "batches": 64
+        },
+        "mu_weaker": {
+          "ce": 2.649320973083377,
+          "change": 0.00041356682777404785,
+          "higher": 49,
+          "batches": 64
+        },
+        "alpha_weaker": {
+          "ce": 2.6514630895107985,
+          "change": 0.0025556832551956177,
+          "higher": 61,
+          "batches": 64
+        },
+        "beta_weaker": {
+          "ce": 2.6489692497998476,
+          "change": 6.184354424476624e-05,
+          "higher": 40,
+          "batches": 64
+        },
+        "gamma_weaker": {
+          "ce": 2.649388052523136,
+          "change": 0.0004806462675333023,
+          "higher": 49,
+          "batches": 64
+        },
+        "rollback": {
+          "ce": 2.649112418293953,
+          "change": 0.00020501203835010529,
+          "higher": 38,
+          "batches": 64
+        },
+        "advance": {
+          "ce": 2.649376867339015,
+          "change": 0.0004694610834121704,
+          "higher": 50,
+          "batches": 64
+        }
+      },
+      "tokens": 262144,
+      "sha256": [
+        "8305b3830397e9420f881e73a826a702dd2a7601a303896ede5c7109ab2c0118",
+        "2079ed9874f3fa81466b1118bf53459bb50a2bf18876dd91a388740266292fe7",
+        "2d7af38cdf1c746502ef8deb0ff5e89f0db9c4caf328c059cdb7285bab7d58a7",
+        "0e8dff515fb75c07d24949780574bffe5d991d9ad3e9bb3bee160b543d09c9b5",
+        "d754caa83fb2765b4dd6e5fda00de7fdc16161984018a68c849f8fec4078b64b",
+        "9474ca5ed37c8e958066c8a9feceed5a434805949cf05d18116e401f80220ff0",
+        "b902bbc84f75a66ea21044f94a276c343d70da775cff27c543949386ccbd8e32",
+        "b0e7d5c48ad6b16242e04567caadfc9f0a1af425194949c9e3e8d0fad3254776"
+      ],
+      "alpha_perp_below_0.01": 1.6751496688179348e-05,
+      "alpha_parallel_below_0.01": 0.350288722826087,
+      "beta_outer_percent": 0.21315426296657985,
+      "gamma_parallel_abs_over2": 0.5164898342556423,
+      "gamma_perp_abs_over2": 0.2221038818359375,
+      "gamma_parallel_mean_abs": 8.780629706382742,
+      "gamma_perp_mean_abs": 1.5436098503258695
+    },
+    "direct_write": {
+      "modes": {
+        "normal": {
+          "ce": 2.648907406255603,
+          "change": 0.0,
+          "higher": 0
+        },
+        "par_0.9": {
+          "ce": 2.6488880552351475,
+          "change": -1.9351020455360413e-05,
+          "higher": 29
+        },
+        "par_1.1": {
+          "ce": 2.648999849334359,
+          "change": 9.24430787563324e-05,
+          "higher": 41
+        },
+        "perp_0.9": {
+          "ce": 2.649239871650934,
+          "change": 0.00033246539533138275,
+          "higher": 38
+        },
+        "perp_1.1": {
+          "ce": 2.6508756950497627,
+          "change": 0.0019682887941598892,
+          "higher": 60
+        },
+        "cap_par": {
+          "ce": 2.649628560990095,
+          "change": 0.0007211547344923019,
+          "higher": 53
+        },
+        "cap_perp": {
+          "ce": 2.701002696529031,
+          "change": 0.05209529027342796,
+          "higher": 64
+        }
+      },
+      "physical": {
+        "mean_abs_gp": 8.799533492271951,
+        "mean_abs_gt": 1.5398172563884511,
+        "mean_dpara": 0.016181802268596033,
+        "mean_dperp": 0.1733663183699266,
+        "mean_write_para": 0.020041811354776038,
+        "mean_write_perp": 0.19796338042663472,
+        "mean_retention_magnitude": 0.26983775324067744,
+        "mean_speed": 0.37686490634367126,
+        "mean_signed_gp": 8.439371190408908,
+        "mean_signed_gt": 0.437777292136596
+      },
+      "gp_weighted": 1.2385401219288847,
+      "gt_weighted": 1.1418791278950924
+    }
+  }
+}
