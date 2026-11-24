@@ -4,7 +4,7 @@ import torch
 
 def wrap_validation(evaluate):
     def measured(model, *args, **kwargs):
-        if model.config.method not in ("chordres_token_controls", "chordres_token_controls_vnorm", "chordres_token_controls_joint_rms", "chordres_joint_gate_bounded", "chordres_honly_free") or kwargs["rank"] != 0:
+        if model.config.method not in ("chordres_token_controls", "chordres_token_controls_vnorm", "chordres_token_controls_joint_rms", "chordres_joint_gate_bounded", "chordres_honly_free", "chordres_honly_scalar_recipe") or kwargs["rank"] != 0:
             return evaluate(model, *args, **kwargs)
 
         dispersions = []

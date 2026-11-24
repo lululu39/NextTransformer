@@ -1,0 +1,33 @@
+{
+  "id": "chordres_honly_scalar_recipe",
+  "name": "Position-only Chord with original scalar constraints",
+  "family": "residual",
+  "tagline": "Normalized position generates the original six Chord controls.",
+  "description": "A position-only token projection with softplus position steps, sigmoid velocity retention and direct signed lookahead and write gains.",
+  "mechanism": [
+    "Normalized position conditions each token gate",
+    "Original scalar activations and bias initialization",
+    "Physical velocity in the lookahead and tangent update"
+  ],
+  "limitations": "Research run with matched random output projections and a high Chord learning rate.",
+  "diagram": "custom",
+  "architecture": {
+    "kind": "custom",
+    "nodes": [
+      "Normalized position",
+      "Scalar-recipe token controls",
+      "Physical lookahead and tangent write",
+      "Final h → LM head"
+    ],
+    "loop": false
+  },
+  "blocks": 23,
+  "ffn": 6144,
+  "params": 1356230169,
+  "flops": 4.687257538067375,
+  "error": 0.3180211014672141,
+  "codeUrl": "https://github.com/lululu39/NextTransformer/tree/chordres-zero/nexttransformer/methods/chordres_honly_scalar_recipe",
+  "sourceUrl": "https://github.com/lululu39/NextTransformer/blob/chordres-zero/nexttransformer/methods/chordres_honly_scalar_recipe/README.md",
+  "cohort": "reference-v1",
+  "costModel": "reference-aten-math-v2"
+}

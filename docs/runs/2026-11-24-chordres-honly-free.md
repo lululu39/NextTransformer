@@ -7,3 +7,5 @@ Preserve the 23-layer, width-1,536, FFN-6,144 architecture, random seed-43 atten
 The bounded control was stopped at the requested switch, with its full update-500 checkpoint retained. At that checkpoint its validation BPB was 0.908883.
 
 [Online training](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/9e441e9a) uses revision `777b83e`. The eight-rank preflight reproduced the bounded model’s initial logits and first training CE exactly. GPU gradient checks verified that the gate outputs have zero velocity-input gradient while the physical lookahead still responds to velocity. The 23-layer calibrated model has 1,356,230,169 parameters and 4.687256 GFLOPs per input token, 0.318% above the shared dense anchor.
+
+This all-affine trial stopped at logged update 50 following clarification of the intended controls. See the [position-only run with the original scalar constraints](2026-11-24-chordres-honly-scalar-recipe.md).

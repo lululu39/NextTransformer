@@ -1,0 +1,7 @@
+# Position-only Chord controls with the original scalar constraints
+
+Start from scratch on the 23-layer Chord shell. Read only normalized position into the token gate and use the original [static three-gain Chord](../../nexttransformer/methods/chordres_velocity_gains/) coefficient activations. Mu and both gamma values are direct, both alpha values use softplus, and beta uses sigmoid. The original scalar biases and a zero initial position projection reproduce the scalar model at initialization. Physical velocity keeps its scale for the lookahead and tangent update.
+
+The superseded [all-affine interpretation](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/9e441e9a) stopped after its logged update 50. Its metrics belong to that historical parameterization. Compare against the [bounded joint h/v run at the same LR](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/ae5f6592) and the [static Chord control](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/a710a057).
+
+The native auxiliary AdamW peak is 0.000848528137423857. Keep seed 42, seed-43 normal output projections, 12 attention value embeddings, smear, zero initial velocity, the ordinary head and saved BF16 forces. Use eight GPUs, B8 per GPU with eight accumulation steps, 2,048 context, ClimbMix data and 8,000 updates on the 46,875-update schedule. Preserve validation every 250 updates, CORE-22 at 8,000, pre-update gradient failure capture and persistent memory reservations.

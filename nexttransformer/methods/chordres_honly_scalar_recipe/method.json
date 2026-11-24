@@ -1,0 +1,12 @@
+{
+  "name": "chordres_honly_scalar_recipe",
+  "family": "residual",
+  "title": "Position-only token-conditioned ChordRes with scalar-baseline constraints",
+  "options": {},
+  "shell": {
+    "layers": 23,
+    "mlp_width": 6144,
+    "window_pattern": "L"
+  },
+  "layer_multiple": 1
+}
