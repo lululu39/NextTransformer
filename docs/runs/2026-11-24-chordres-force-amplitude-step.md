@@ -7,3 +7,9 @@ Use native zero-initialized attention output and MLP down projections, seed 42, 
 The previous [h-only single-step run](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/69bbb7bd) used matching zero initialization and native control LR but conditioned all three controls on position. Its last validation was 750. A matched constant-step training run with w fixed at zero would isolate the learned amplitude weight.
 
 [Online training](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/94bbad09) uses source revision `5316ff2`. All eight ranks passed the BF16 fused forward/FP64 derivative oracle and two full-batch updates. The 306 common initialized parameters matched the simplified h-only comparison exactly, as did its starting logits. The model has 1,355,810,751 parameters and the calibrated cost is 4.679439 GFLOPs/token, 0.151% above the shared dense anchor. W&B records the mean absolute amplitude weight and across-token alpha standard deviation on validation.
+
+## Early comparison at 250 updates
+
+Validation BPB on the same 41,943,040 tokens was 1.025440 for the amplitude-only step and 0.997605 for the zero-init h-only three-control model. The older zero-init static two-position-step, one-beta Chord on the same 23-layer shell scored 1.035734. It uses a different position update. Over matched logged updates 110–200, mean training CE was 3.78143, 3.65129 and 3.79298 respectively. The amplitude run’s gradient norm was 0.21650 at update 250.
+
+On the first rank-zero validation batch, the amplitude model’s mean alpha was 0.06780 and its mean within-sublayer, across-token alpha standard deviation was 0.00282, versus 0.04807 in the h-only comparison. The learned amplitude weights had mean and mean absolute value +0.09065. This comparison changes the gate input and removes token-specific lookahead and retention, so it cannot attribute the BPB gap to force amplitude by itself.
