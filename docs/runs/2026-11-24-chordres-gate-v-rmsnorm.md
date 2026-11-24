@@ -20,3 +20,17 @@ The [online training run](https://wandb.ai/yibozhong657-none/nexttransformer-cho
 | 100 | 5.6524 | 7.111e+11 |
 
 The model passed the update window in which the raw-velocity run exited. Weightless RMSNorm on the velocity input alone still allowed severe gradient growth under the original control learning rate.
+
+## Backward-path diagnosis
+
+The last production log was update 160, CE 4.94061, global gradient norm 3.146e+14. Rank zero received SIGINT during backward; peers reported CUDA/NCCL peer-access errors during teardown.
+
+The two-update smoke checkpoint gave a median velocity RMS of 0.0334 (median across the 45 sites with nonconstant input velocity of the per-site token medians). A fresh 42-update replay used the original initialization, token order, eight-rank full batch, optimizer, kernels and schedule. On the same rank-zero microbatch of 16,384 tokens at each tested update, all interventions preserve the forward pass. Only the gradient through the specified gate input or the velocity connection changes. The norm below is with respect to the first normalized hidden state. Each row uses the same weights and tokens across modes. The replay reproduced the instability; individual training losses and gradients can differ from the production trajectory.
+
+| Replay update | Mean CE | Original | Cap gate inverse RMS at 10 in backward | Cap at 1 | Stop gate gradient into velocity | Stop gate gradient into position |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 10 | 7.377268 | 0.00149669 | 0.00142672 | 0.00146152 | 0.00147567 | 0.00158333 |
+| 30 | 6.247625 | 0.132008 | 0.00963454 | 0.00407606 | 0.00370999 | 0.0621574 |
+| 40 | 8.725633 | 1101.58 | 0.533842 | 0.0349206 | 0.0121647 | 511.732 |
+
+At update 40 the cap of 1 on the inverse-RMS multiplier alone reduced the initial-state gradient by about 31,550×. The physical velocity, forward control values, lookahead and velocity write were identical. This measures local backward sensitivity rather than the effect of training with a modified gate.
