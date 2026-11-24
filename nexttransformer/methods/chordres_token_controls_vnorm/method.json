@@ -1,0 +1,12 @@
+{
+  "name": "chordres_token_controls_vnorm",
+  "family": "residual",
+  "title": "Token-dependent ChordRes with RMS-normalized gate velocity",
+  "options": {},
+  "shell": {
+    "layers": 23,
+    "mlp_width": 6144,
+    "window_pattern": "L"
+  },
+  "layer_multiple": 1
+}

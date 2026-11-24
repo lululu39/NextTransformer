@@ -1,0 +1,33 @@
+{
+  "id": "chordres_token_controls_vnorm",
+  "name": "Token-dependent ChordRes with RMS-normalized gate velocity",
+  "family": "residual",
+  "tagline": "Per-token Chord coefficients read normalized velocity.",
+  "description": "Each zero-start gate reads the position and RMS-normalized velocity. The lookahead and tangent update use physical velocity at its original magnitude.",
+  "mechanism": [
+    "Position and weightless RMS-normalized velocity jointly predict the coefficients at each site",
+    "Zero-start projections preserve the initial static model",
+    "Triton fuses per-token controls into the saved-force Chord path"
+  ],
+  "limitations": "Research run with matched random output projections and a high Chord learning rate.",
+  "diagram": "custom",
+  "architecture": {
+    "kind": "custom",
+    "nodes": [
+      "Position and velocity",
+      "Per-token coefficients",
+      "Chord read, branch and tangent write",
+      "Final h → LM head"
+    ],
+    "loop": false
+  },
+  "blocks": 23,
+  "ffn": 6144,
+  "params": 1356649497,
+  "flops": 4.690093715465813,
+  "error": 0.37872177809810115,
+  "codeUrl": "https://github.com/lululu39/NextTransformer/tree/chordres-zero/nexttransformer/methods/chordres_token_controls_vnorm",
+  "sourceUrl": "https://github.com/lululu39/NextTransformer/blob/chordres-zero/nexttransformer/methods/chordres_token_controls_vnorm/README.md",
+  "cohort": "reference-v1",
+  "costModel": "reference-aten-math-v2"
+}

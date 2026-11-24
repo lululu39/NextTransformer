@@ -1,0 +1,5 @@
+# RMS-normalized gate velocity in token-dependent ChordRes
+
+Compare against the [raw-velocity run](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/81a3c5bc), which recorded a nonfinite gradient norm after update 80. Start from seed 42 with the same random seed-43 output projections. Change only the velocity input to each gate. The normalized input uses one token’s mean squared velocity across its hidden width, epsilon 1e-6, and no learned gain or bias. The lookahead and tangent velocity update retain the physical velocity and its magnitude.
+
+Reuse 23 layers, width 1,536, FFN width 6,144, zero initial velocity, the ordinary LM head, 12 attention value embeddings, smear, saved BF16 forces, and AdamW peak control LR 0.0024494897427831783. All 1,356,649,497 parameters and their initialization match the raw-velocity model. Eight ranks at B8, eight accumulation steps and 2,048-token context yield 1,048,576 input tokens per update. Train 8,000 updates from scratch on the original 46,875-step schedule. Evaluate BPB every 250 steps and CORE-22 at update 8,000.
