@@ -9,3 +9,5 @@ Use the [terminal-read configuration](../../configs/residual/chordres_head_looka
 ## Step 1,500 readout sensitivity
 
 The full validation BPB was 0.82593724 with terminal lookahead and 0.82553238 for the separately trained high-LR control. The trained rho was 0.935842. On 128 packed validation rows (16 from each of eight native streams, 262,144 input tokens in total), the same checkpoint scored 0.85629760 BPB intact and 0.87263295 BPB after setting rho to zero, a change of +0.01633536. The RMS of rho times the terminal velocity was 8.47% of the terminal hidden RMS on non-special token positions. This frozen-checkpoint sensitivity measures reliance on the final read; the full-validation comparison measures the change between training recipes. [W&B run](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/402de56c).
+
+Training stopped at logged step 1,830 with a complete 1,500-step checkpoint to run the [matched no-VE Standard Residual](2026-11-24-standard-no-attention-ve-8k.md).

@@ -1,0 +1,8 @@
+{
+  "name": "residual_standard_no_ve",
+  "family": "residual",
+  "title": "Standard Residual without attention value embeddings",
+  "options": {"attention_value_embeddings": false},
+  "shell": {"layers": 23, "mlp_width": 6144, "window_pattern": "L"},
+  "layer_multiple": 1
+}
