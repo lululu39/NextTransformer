@@ -1,0 +1,33 @@
+{
+  "id": "chordres_token_controls",
+  "name": "Token-dependent ChordRes",
+  "family": "residual",
+  "tagline": "Per-token Chord controls from position and velocity.",
+  "description": "A separate zero-initialized linear map reads position and velocity at each Chord sublayer. Its six outputs condition the lookahead, position update and tangent velocity update.",
+  "mechanism": [
+    "Position and velocity jointly predict the coefficients at each site",
+    "Zero-start projections preserve the initial static model",
+    "Triton fuses per-token controls into the saved-force Chord path"
+  ],
+  "limitations": "Research run with matched random output projections and a high Chord learning rate.",
+  "diagram": "custom",
+  "architecture": {
+    "kind": "custom",
+    "nodes": [
+      "Position and velocity",
+      "Per-token coefficients",
+      "Chord read, branch and tangent write",
+      "Final h → LM head"
+    ],
+    "loop": false
+  },
+  "blocks": 23,
+  "ffn": 6144,
+  "params": 1356649497,
+  "flops": 4.689328605465813,
+  "error": 0.36234667591914516,
+  "codeUrl": "https://github.com/lululu39/NextTransformer/tree/chordres-zero/nexttransformer/methods/chordres_token_controls",
+  "sourceUrl": "https://github.com/lululu39/NextTransformer/blob/chordres-zero/nexttransformer/methods/chordres_token_controls/README.md",
+  "cohort": "reference-v1",
+  "costModel": "reference-aten-math-v2"
+}

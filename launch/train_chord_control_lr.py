@@ -6,7 +6,7 @@ METHOD = "chordres_zero_save_force"
 
 
 def set_control_lr(model, optimizer):
-    if model.config.method not in (METHOD, "chordres_velocity_gains", "chordres_ve_turn", train_matched_normal.NO_VE_METHOD, train_matched_normal.HEAD_LOOKAHEAD_METHOD):
+    if model.config.method not in (METHOD, "chordres_token_controls", "chordres_velocity_gains", "chordres_ve_turn", train_matched_normal.NO_VE_METHOD, train_matched_normal.HEAD_LOOKAHEAD_METHOD):
         raise ValueError("This research recipe requires a saved-force ChordRes model starting from rest")
     controls = {id(p) for p in model.residual_maps.parameters()}
     groups = [g for g in optimizer.param_groups if any(id(p) in controls for p in g["params"])]
@@ -47,6 +47,10 @@ def install(trainer):
             if self.run is not None:
                 self.run.config.update({"chord_control_peak_lr": CONTROL_PEAK_LR,
                                         "zero_velocity_reference": "1879c1a2"})
+                if config.method == "chordres_token_controls":
+                    self.run.config.update({"token_control_input": "pre-sublayer position and velocity",
+                                            "token_control_weight_init": 0., "static_control_run": "a710a057",
+                                            "token_control_terminal_outputs": 3, "head_lookahead": False})
                 if config.method == "chordres_velocity_gains":
                     self.run.config.update({"velocity_gains": "direct trainable parallel and perpendicular gains",
                                             "gamma_parallel_init": .5, "gamma_perp_init": .5,
@@ -85,6 +89,8 @@ def install(trainer):
                     event[f"{family}_{key}_median"] = median(row[key] for row in values)
         return append(output, event)
 
+    from launch.chord_token_metrics import wrap_validation
+    trainer.evaluate_bpb = wrap_validation(trainer.evaluate_bpb)
     trainer.append_event = append_event
     trainer.build_optimizer = build_optimizer
     trainer.software_identity = software
