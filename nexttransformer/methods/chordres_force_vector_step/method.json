@@ -1,0 +1,12 @@
+{
+  "name": "chordres_force_vector_step",
+  "family": "residual",
+  "title": "ChordRes with a full-force vector position gate",
+  "options": {},
+  "shell": {
+    "layers": 23,
+    "mlp_width": 6144,
+    "window_pattern": "L"
+  },
+  "layer_multiple": 1
+}

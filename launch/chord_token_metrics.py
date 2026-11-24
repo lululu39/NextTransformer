@@ -5,14 +5,21 @@ import torch
 def wrap_validation(evaluate):
     def measured(model, *args, **kwargs):
         amplitude = model.config.method == "chordres_force_amplitude_step"
-        if kwargs["rank"] != 0 or (not amplitude and model.config.method not in ("chordres_token_controls", "chordres_token_controls_vnorm", "chordres_token_controls_joint_rms", "chordres_joint_gate_bounded", "chordres_honly_free", "chordres_honly_scalar_recipe", "chordres_honly_single_step")):
+        vector = model.config.method == "chordres_force_vector_step"
+        if kwargs["rank"] != 0 or (not (amplitude or vector) and model.config.method not in ("chordres_token_controls", "chordres_token_controls_vnorm", "chordres_token_controls_joint_rms", "chordres_joint_gate_bounded", "chordres_honly_free", "chordres_honly_scalar_recipe", "chordres_honly_single_step")):
             return evaluate(model, *args, **kwargs)
 
         dispersions = []
         handles = []
 
         def sample(site, inputs, output):
-            if amplitude:
+            if vector:
+                force = inputs[2].detach().float()
+                w = site.force_weight.detach()
+                logit = torch.nn.functional.linear(force, w.unsqueeze(0), site.step.detach())
+                alpha = torch.nn.functional.softplus(logit)
+                dispersions.append(torch.stack((alpha.mean(), alpha.std(unbiased=False), w.norm())))
+            elif amplitude:
                 force = inputs[2].detach().float()
                 power = force.square().mean(-1)
                 weight = site.amplitude_weight.detach().reshape(())
@@ -33,6 +40,10 @@ def wrap_validation(evaluate):
             raise RuntimeError("Expected one conditioning sample from every Chord site")
         # The terminal MLP has a position read and write but no consumed velocity.
         spread = torch.stack(dispersions)
+        if vector:
+            result.update(dict(zip(("mean_alpha","token_std_alpha","force_projection_l2"),
+                                   spread.mean(0).tolist(),strict=True)))
+            return result
         if amplitude:
             values=spread.mean(0).tolist()
             names=("mean_alpha","token_std_alpha","amplitude_weight","abs_amplitude_weight")

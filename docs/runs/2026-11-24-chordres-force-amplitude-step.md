@@ -13,3 +13,5 @@ The previous [h-only single-step run](https://wandb.ai/yibozhong657-none/nexttra
 Validation BPB on the same 41,943,040 tokens was 1.025440 for the amplitude-only step and 0.997605 for the zero-init h-only three-control model. The older zero-init static two-position-step, one-beta Chord on the same 23-layer shell scored 1.035734. It uses a different position update. Over matched logged updates 110–200, mean training CE was 3.78143, 3.65129 and 3.79298 respectively. The amplitude run’s gradient norm was 0.21650 at update 250.
 
 On the first rank-zero validation batch, the amplitude model’s mean alpha was 0.06780 and its mean within-sublayer, across-token alpha standard deviation was 0.00282, versus 0.04807 in the h-only comparison. The learned amplitude weights had mean and mean absolute value +0.09065. This comparison changes the gate input and removes token-specific lookahead and retention, so it cannot attribute the BPB gap to force amplitude by itself.
+
+The amplitude-only run was superseded at logged update 330 by the [full force-vector gate](2026-11-24-chordres-force-vector-step.md).
