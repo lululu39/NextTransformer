@@ -1,0 +1,5 @@
+# Joint gate RMSNorm in token-dependent ChordRes
+
+Compare joint RMS normalization of the position and velocity with [velocity-only normalization](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/57313ecf) and the [raw gate](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/81a3c5bc). Both halves share one inverse RMS computed across 2D features with epsilon 1e-6. The gate is parameter-free apart from its existing projection and bias. The lookahead and write consume physical velocity.
+
+Use the same 23-layer, width-1,536, FFN-6,144 shell, attention value embeddings, smear, zero initial velocity and ordinary head. Use saved BF16 forces, random seed-43 output projections, seed 42, and high Chord AdamW peak LR 0.0024494897427831783 with zero control weight decay. Train from scratch on ClimbMix with 2,048 context, eight ranks, B8 per GPU and eight accumulation steps. Stop at 8,000 updates on the original 46,875-update LR schedule, with validation BPB every 250 updates and CORE-22 at 8,000.
