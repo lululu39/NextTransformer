@@ -11,3 +11,14 @@ The fixed-shape audit measured 4.690243 GFLOPs per input token (0.382% above the
 The first full-model preflight identified a 2.61e-8 FP32 difference between the old softplus and new sigmoid at initialization. The bounded position sigmoid is evaluated in centered odds form around the old FP32 step (0.049999985843896866), preserving its mathematical upper bound of 1. The updated cost is 4.690244 GFLOPs/token.
 
 [Online training](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/f0d32bb6) started from scratch at source revision `a17bc3f`. Both eight-rank updates passed, all 1,356,649,497 parameters matched in shape, the initial logits were identical on the verification sequence, and initial cross entropy was 10.39548248. The eight-card reservation was handed to the training ranks with 60 GiB per card.
+
+## Through 250 updates
+
+| Update | Bounded gradient norm | Unbounded joint gradient norm | Bounded training CE |
+| ---: | ---: | ---: | ---: |
+| 100 | 0.416447 | 2.09863 | 3.981236 |
+| 130 | 0.304481 | 842.17 | 3.675997 |
+| 170 | 0.528324 | 6.38223e+09 | 3.478612 |
+| 250 | 0.630145 | 1.52989e+13 | 3.299800 |
+
+At 250 updates, validation BPB was 1.001307 for the bounded model, 1.137413 for the unbounded joint gate and 1.011102 for the static Chord control. The maximum global gradient norm over **every** update from 120 through 250 was 0.96338. The 8,000-update experiment continued past this check.
