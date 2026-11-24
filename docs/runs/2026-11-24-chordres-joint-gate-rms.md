@@ -20,3 +20,9 @@ The metrics below use matching optimizer updates. Cross entropy is measured on t
 | 100 | 2.099 | 7.111e+11 | — | 0.1541 | 4.23309 | 4.12300 |
 
 Joint normalization kept the reported gradient norms within single digits through update 100, including the 40–80 update window in which both token-gate controls developed exploding gradients. Static Chord had lower training CE at update 100. Post-training validation starts at update 250.
+
+## Subsequent instability and shutdown
+
+At updates 120, 130, 170 and 250, production gradient norms rose to 18.1, 842, 6.38e9 and 1.53e13. Validation BPB at 250 was 1.137413, versus 1.011102 in the static control. Cross-token standard deviations at that validation, averaged across the sampled sites, were 3.56 and 3.29 for the two position step sizes and 6.78 and 8.24 for the two displacement-to-velocity gains. The production trainer exited on its nonfinite global gradient norm after the last logged update 390, before the first rolling checkpoint at 500.
+
+The separate diagnostic replay was stopped at the user’s request (last logged update 145). No post-onset joint-RMS weights were captured. On the available two-update smoke checkpoint, stopping gate gradients into velocity changed the initial-position gradient by less than 1% on both probed sequences. Direct post-onset path interventions using the previous velocity-only RMS checkpoint are recorded [with that model](2026-11-24-chordres-gate-v-rmsnorm.md#additional-backward-path-comparisons). Their effect sizes have not been established for the joint-RMS run.

@@ -34,3 +34,21 @@ The two-update smoke checkpoint gave a median velocity RMS of 0.0334 (median acr
 | 40 | 8.725633 | 1101.58 | 0.533842 | 0.0349206 | 0.0121647 | 511.732 |
 
 At update 40 the cap of 1 on the inverse-RMS multiplier alone reduced the initial-state gradient by about 31,550×. The physical velocity, forward control values, lookahead and velocity write were identical. This measures local backward sensitivity rather than the effect of training with a modified gate.
+
+## Additional backward-path comparisons
+
+Two distinct fixed 2,048-token ClimbMix training rows were evaluated at the saved **42-update replay checkpoint** using the same-forward gradient interventions. The table reports the L2 norm of the gradient with respect to the first normalized position. Each intervention applies at every sublayer. It modifies only the named Jacobian terms. The losses remain exactly the same within each column.
+
+| Intervention | Row A | Row B |
+| --- | ---: | ---: |
+| Original | 387.27 | 3097.7 |
+| Stop gate gradients into velocity | 0.067652 | 0.059235 |
+| Stop gate gradients into position | 29.316 | 114.3 |
+| Stop gate-input gradients of both position step sizes | 0.21451 | 0.4489 |
+| Clip the two position gains in the state/force VJP at 1 | 259.46 | 448.86 |
+| Clip the two displacement-to-velocity gains to [-1,1] in the state/force VJP only | 0.94149 | 1.9922 |
+| Freeze both projection directions in the write VJP | 124.01 | 130.86 |
+| Cap inverse RMS of the branch force at 1 in backward | 34.529 | 119.91 |
+| Cap inverse RMS of the mixed new position at 1 in backward | 57.796 | 1084.5 |
+
+The unmodified losses are 8.45453 and 8.34882. These interventions overlap; their reductions cannot be added as independent shares.
