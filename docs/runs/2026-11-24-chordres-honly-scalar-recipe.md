@@ -22,3 +22,15 @@ Validation BPB on 41,943,040 fixed tokens. Lower values are better. Published re
 | [Official Standard Residual](../../results/runs/residual_standard.json) | 1.007384 | 0.916649 | 0.878293 | 0.863117 |
 
 Mean training CE across logged updates 910–1,000 was 2.804573 for h-only Chord and 2.806023 for static Chord. Across all 100 individual updates from 901 to 1,000 the global gradient norm had median 0.90088, maximum 1.82161, and value 0.60814 at 1,000. The model and distributed state checkpoint at 1,000 is complete.
+
+## Branch-output magnitude at 1,000 updates
+
+On eight validation streams (131,072 tokens total), record the RMS of the raw attention or MLP output at each token before the Chord write normalizes its target. P90/P10 is computed over tokens within each sublayer. Correlations are computed over those same tokens separately per sublayer. The table reports medians across sublayers in the named group.
+
+| Sites | P90/P10 branch RMS | Absolute correlation of log branch RMS with alpha perpendicular | With alpha parallel | With realized step RMS |
+| --- | ---: | ---: | ---: | ---: |
+| attention | 1.346 | 0.082 | 0.101 | 0.108 |
+| mlp | 2.088 | 0.260 | 0.136 | 0.249 |
+| all | 1.698 | 0.170 | 0.123 | 0.176 |
+
+On the first 32,768 validation tokens, multiplying the output of every attention and MLP by 8 at the Chord write gave bitwise identical final hidden states on all eight GPUs. The measurement establishes scale invariance in these examples. It does not measure the accuracy effect of training a step-size gate with access to branch magnitude.
