@@ -9,3 +9,9 @@ The new matrix adds 2,359,296 parameters, for 1,358,589,602 total. Theoretical c
 ## Verified start
 
 The [online training run](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/ed9e70d4) uses revision `896d1c0ac9dc`. All 443 shared parameter tensors and the initial logits matched the zero-v0 control exactly. All eight GPUs passed the tangent VJP oracle and three real full-batch updates. Rank zero measured Wv gradient norms 0, 0, 2.1464e-06 on the first three updates. After update 3, sampled initial velocity RMS was 0.00823776. First formal CE was 10.39769365 and gradient norm 0.421289 (paired control 10.39769365 and 0.421289).
+
+## Checkpoint comparison at 2,000 updates
+
+The run paused on request at its complete 2,000-update checkpoint. On the identical 41,943,040-token validation, Chord with learned initial velocity scored 0.81178321 BPB and the zero-initial-velocity control scored 0.81152038 (learned minus zero +0.00026282). The initial velocity RMS measured on the usual first rank-zero validation batch was 5.2821.
+
+A separate paired prediction diagnostic used 64 validation sequences of 2,048 tokens, with the same inputs, targets and byte mask for both checkpoints. Top-1 predictions agreed on 77.77% of 130,981 nonzero-byte targets. The mean absolute paired target-NLL difference was 0.4420 nats; the signed difference on this smaller sample was -0.0044 nats. The full-validation BPB above is the matched endpoint comparison.
