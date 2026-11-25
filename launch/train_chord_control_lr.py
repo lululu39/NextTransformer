@@ -6,7 +6,7 @@ METHOD = "chordres_zero_save_force"
 
 
 def set_control_lr(model, optimizer, peak_lr=CONTROL_PEAK_LR):
-    if model.config.method not in (METHOD, "chordres_honly_small_dynamic", "chordres_ve_unit_impulse", "chordres_ve_impulse", "chordres_force_vector_step", "chordres_force_amplitude_step", "chordres_honly_single_step", "chordres_honly_scalar_recipe", "chordres_honly_free", "chordres_joint_gate_bounded", "chordres_token_controls_joint_rms", "chordres_token_controls_vnorm", "chordres_token_controls", "chordres_raw_force", "chordres_velocity_gains", "chordres_ve_turn", train_matched_normal.NO_VE_METHOD, train_matched_normal.HEAD_LOOKAHEAD_METHOD):
+    if model.config.method not in (METHOD, "chordres_honly_mhc_mix", "chordres_honly_small_dynamic", "chordres_ve_unit_impulse", "chordres_ve_impulse", "chordres_force_vector_step", "chordres_force_amplitude_step", "chordres_honly_single_step", "chordres_honly_scalar_recipe", "chordres_honly_free", "chordres_joint_gate_bounded", "chordres_token_controls_joint_rms", "chordres_token_controls_vnorm", "chordres_token_controls", "chordres_raw_force", "chordres_velocity_gains", "chordres_ve_turn", train_matched_normal.NO_VE_METHOD, train_matched_normal.HEAD_LOOKAHEAD_METHOD):
         raise ValueError("This research recipe requires a saved-force ChordRes model starting from rest")
     controls = {id(p) for p in model.residual_maps.parameters()}
     groups = [g for g in optimizer.param_groups if any(id(p) in controls for p in g["params"])]
@@ -15,7 +15,9 @@ def set_control_lr(model, optimizer, peak_lr=CONTROL_PEAK_LR):
     group = groups[0]
     if group["kind"] != "adamw" or group["weight_decay"] != 0.:
         raise ValueError("Unexpected Chord control optimizer group")
-    if model.config.method == "chordres_honly_small_dynamic":
+    if model.config.method == "chordres_honly_mhc_mix":
+        peak_lr = CONTROL_PEAK_LR
+    if model.config.method in ("chordres_honly_small_dynamic", "chordres_honly_mhc_mix"):
         # Keep the projection at the shell's native auxiliary rate. Raise only
         # the static biases to the peak used by the paired static Chord run.
         if peak_lr != CONTROL_PEAK_LR:
@@ -23,7 +25,7 @@ def set_control_lr(model, optimizer, peak_lr=CONTROL_PEAK_LR):
         projections = []
         biases = []
         for name, parameter in zip(group["parameter_names"], group["params"], strict=True):
-            (projections if name.endswith(".token_weight") else biases).append((name, parameter))
+            (projections if name.endswith((".token_weight", ".mix_scales")) else biases).append((name, parameter))
         if not projections or not biases:
             raise ValueError("Both static Chord biases and token projections are required")
         projection_group = dict(group, parameter_names=[n for n, _ in projections],
@@ -78,6 +80,13 @@ def install(trainer, *, native_control_lr=False, matched_normal=True):
                     self.run.config.update({"token_control_input": "pre-sublayer position and velocity",
                                             "token_control_weight_init": 0., "static_control_run": "a710a057",
                                             "token_control_terminal_outputs": 3, "head_lookahead": False})
+                if config.method == "chordres_honly_mhc_mix":
+                    from nexttransformer.methods.chordres_honly_mhc_mix import INITIAL_SCALE
+                    self.run.config.update({"dynamic_scale_init": INITIAL_SCALE, "dynamic_scale_trainable": True,
+                                            "modulation_scale_groups": ["lookahead", "position", "velocity"],
+                                            "projection_and_scale_peak_lr": train.adamw_lr * (train.global_batch_tokens / 524288) ** .5,
+                                            "token_projection_init": 0., "gate_input": "RMSNorm(h)",
+                                            "fixed_scale_reference": "faea35e6", "static_three_gain_reference": "a710a057"})
                 if config.method == "chordres_honly_small_dynamic":
                     from nexttransformer.methods.chordres_honly_small_dynamic import DYNAMIC_SCALE
                     self.run.config.update({"token_projection_scale": DYNAMIC_SCALE,

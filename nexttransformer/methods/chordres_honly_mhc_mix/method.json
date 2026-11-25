@@ -1,0 +1,12 @@
+{
+  "name": "chordres_honly_mhc_mix",
+  "family": "residual",
+  "title": "Chord with learned read, position and velocity modulation scales",
+  "options": {},
+  "shell": {
+    "layers": 23,
+    "mlp_width": 6144,
+    "window_pattern": "L"
+  },
+  "layer_multiple": 1
+}

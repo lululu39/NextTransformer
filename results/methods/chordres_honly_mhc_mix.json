@@ -1,0 +1,33 @@
+{
+  "id": "chordres_honly_mhc_mix",
+  "name": "Native-zero Chord with learned modulation scales",
+  "family": "residual",
+  "tagline": "Learn the modulation strength for each read, position update and velocity write.",
+  "description": "Zero-initialized h-only token projections modulate static Chord logits. Each control family has a learned scale that starts at 0.01. Branch output projections start at zero.",
+  "mechanism": [
+    "Native zero branch output projections",
+    "Zero-initialized RMS-normalized h-only gates",
+    "Three learned scales per consumed site with separate learning rates for static biases and dynamic controls"
+  ],
+  "limitations": "Bounded 8,000-update research comparison on the reference schedule.",
+  "diagram": "custom",
+  "architecture": {
+    "kind": "custom",
+    "nodes": [
+      "Normalized position",
+      "Scalar-recipe token controls",
+      "Physical lookahead and tangent write",
+      "Final h \u2192 LM head"
+    ],
+    "loop": false
+  },
+  "blocks": 23,
+  "ffn": 6144,
+  "params": 1356230306,
+  "flops": 4.6872586300698575,
+  "error": 0.31804447281542636,
+  "codeUrl": "https://github.com/lululu39/NextTransformer/tree/chordres-zero/nexttransformer/methods/chordres_honly_mhc_mix",
+  "sourceUrl": "https://github.com/lululu39/NextTransformer/blob/chordres-zero/nexttransformer/methods/chordres_honly_mhc_mix/README.md",
+  "cohort": "reference-v1",
+  "costModel": "reference-aten-math-v2"
+}
