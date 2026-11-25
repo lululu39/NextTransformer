@@ -7,3 +7,16 @@ Use native zero attention output and MLP down projections. Each normalized pre-s
 The model uses 23 blocks, width 1536, FFN 6144, full attention, 12 native VE tables, input smear, zero initial velocity and the ordinary LM head. Use the previous environment, ClimbMix data revision and data order, seed 42, eight H100 ranks, B8, eight accumulation steps and 2,048-token context. Train for 8,000 updates (8,388,608,000 input tokens) on the 46,875-update schedule. Retain the existing gradient stop. Run BPB each 250 updates and full CORE-22 with 2,048-token evaluation context at 8,000, then save the resumable checkpoint. The model has 1,356,230,306 parameters and 4.687259 theoretical training GFLOPs per input token (0.318% above the anchor). The fixed-scale reference used random branch output projections, so a performance difference combines the learnable scales and the change in branch initialization.
 
 The [training run](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/45be3fd3) uses revision `0abb7f7f6c8c`. All eight H100 ranks passed the independent gate forward/backward checks (including the scale derivatives) and three real full-batch steps. The initial logits matched native-zero static three-gain Chord exactly. The dynamic scales had zero first-update gradient as expected with zero projection weights. Rank zero first measured a nonzero scale gradient on update 2 (L2 norm 3.49481e-09). On the training run the initial full-validation BPB was 3.16874171 and the first optimizer update recorded CE 10.397694.
+
+## Results at 8,000 updates
+
+The run completed 8,388,608,000 input tokens. The 41,943,040-token validation and all 22 CORE tasks completed. The step-8,000 model and all eight optimizer and data shards were saved as a resumable checkpoint. Both columns use the same step for every model.
+
+| Model | Validation BPB | CORE-22 (×100) |
+| --- | ---: | ---: |
+| Chord, native zero and learned scales | 0.777208 | 22.741 |
+| Official mHC | 0.774409 | 23.416 |
+| Official Block AttnRes | 0.777982 | 22.686 |
+| Official Dense Baseline | 0.782494 | 21.566 |
+| Official Standard Residual | 0.791076 | 19.633 |
+| Earlier static Chord, matched random branches | 0.782269 | 21.545 |
