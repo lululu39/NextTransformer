@@ -3,7 +3,8 @@ from launch import train_matched_normal
 
 CONTROL_PEAK_LR = 0.0024494897427831783
 METHOD = "chordres_zero_save_force"
-LEARNED_MIX_METHODS = ("chordres_honly_mhc_mix", "chordres_update_soft_force")
+SOFT_FORCE_METHODS = ("chordres_update_soft_force", "chordres_soft_force_h0_velocity")
+LEARNED_MIX_METHODS = ("chordres_honly_mhc_mix", *SOFT_FORCE_METHODS)
 
 
 def set_control_lr(model, optimizer, peak_lr=CONTROL_PEAK_LR):
@@ -88,10 +89,13 @@ def install(trainer, *, native_control_lr=False, matched_normal=True):
                                             "projection_and_scale_peak_lr": train.adamw_lr * (train.global_batch_tokens / 524288) ** .5,
                                             "token_projection_init": 0., "gate_input": "RMSNorm(h)",
                                             "fixed_scale_reference": "faea35e6", "static_three_gain_reference": "a710a057"})
-                if config.method == "chordres_update_soft_force":
+                if config.method in SOFT_FORCE_METHODS:
                     from nexttransformer.methods.chordres_update_soft_force import FORCE_TAU
                     self.run.config.update({"position_force_role": "update", "force_rms_tau": FORCE_TAU,
                                             "target_hard_reference": "45be3fd3"})
+                if config.method == "chordres_soft_force_h0_velocity":
+                    self.run.config.update({"initial_velocity_source": "tangent projection of W_v h0",
+                                            "initial_velocity_weight_init": 0., "zero_v0_reference": "2574b7dc"})
                 if config.method == "chordres_honly_small_dynamic":
                     from nexttransformer.methods.chordres_honly_small_dynamic import DYNAMIC_SCALE
                     self.run.config.update({"token_projection_scale": DYNAMIC_SCALE,

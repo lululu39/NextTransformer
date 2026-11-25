@@ -1,0 +1,33 @@
+{
+  "id": "chordres_soft_force_h0_velocity",
+  "name": "Soft-force Chord with initial tangent velocity from h0",
+  "family": "residual",
+  "tagline": "A zero-initialized shared projection predicts initial velocity from the starting spherical position.",
+  "description": "Project the linear image of the post-smear, unit-RMS starting position into its tangent plane. All later soft force and velocity updates use the paired native-zero Chord equations.",
+  "mechanism": [
+    "One zero-initialized shared bias-free matrix before the first attention read",
+    "BF16 initial velocity with FP32 tangent projection reductions",
+    "Original update-based soft force (tau 0.05) and learned h-only Chord controls"
+  ],
+  "limitations": "Bounded 8,000-update research comparison on the reference schedule.",
+  "diagram": "custom",
+  "architecture": {
+    "kind": "custom",
+    "nodes": [
+      "Normalized position",
+      "Scalar-recipe token controls",
+      "Physical lookahead and tangent write",
+      "Final h \u2192 LM head"
+    ],
+    "loop": false
+  },
+  "blocks": 23,
+  "ffn": 6144,
+  "params": 1358589602,
+  "flops": 4.701363074840377,
+  "error": 0.6199118177654617,
+  "codeUrl": "https://github.com/lululu39/NextTransformer/tree/chordres-zero/nexttransformer/methods/chordres_soft_force_h0_velocity",
+  "sourceUrl": "https://github.com/lululu39/NextTransformer/blob/chordres-zero/nexttransformer/methods/chordres_soft_force_h0_velocity/README.md",
+  "cohort": "reference-v1",
+  "costModel": "reference-aten-math-v2"
+}

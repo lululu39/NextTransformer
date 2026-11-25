@@ -6,7 +6,7 @@ def wrap_validation(evaluate):
     def measured(model, *args, **kwargs):
         amplitude = model.config.method == "chordres_force_amplitude_step"
         vector = model.config.method == "chordres_force_vector_step"
-        if kwargs["rank"] != 0 or (not (amplitude or vector) and model.config.method not in ("chordres_token_controls", "chordres_token_controls_vnorm", "chordres_token_controls_joint_rms", "chordres_joint_gate_bounded", "chordres_honly_free", "chordres_honly_small_dynamic", "chordres_honly_mhc_mix", "chordres_update_soft_force", "chordres_honly_scalar_recipe", "chordres_honly_single_step")):
+        if kwargs["rank"] != 0 or (not (amplitude or vector) and model.config.method not in ("chordres_token_controls", "chordres_token_controls_vnorm", "chordres_token_controls_joint_rms", "chordres_joint_gate_bounded", "chordres_honly_free", "chordres_honly_small_dynamic", "chordres_honly_mhc_mix", "chordres_update_soft_force", "chordres_soft_force_h0_velocity", "chordres_honly_scalar_recipe", "chordres_honly_single_step")):
             return evaluate(model, *args, **kwargs)
 
         dispersions = []
@@ -30,15 +30,25 @@ def wrap_validation(evaluate):
                 dispersions.append(controls.std(dim=0, unbiased=False))
             handles[len(dispersions) - 1].remove()
 
+        velocity_metrics = {}
+        velocity_hook = None
+        if model.config.method == "chordres_soft_force_h0_velocity":
+            def sample_velocity(module, inputs, output):
+                velocity_metrics["initial_velocity_rms"] = output.detach().float().square().mean().sqrt().item()
+                velocity_hook.remove()
+            velocity_hook = model.initial_velocity_projection.register_forward_hook(sample_velocity)
         handles.extend(site.register_forward_hook(sample) for site in model.residual_maps)
         try:
             result = evaluate(model, *args, **kwargs)
         finally:
+            if velocity_hook is not None:
+                velocity_hook.remove()
             for handle in handles:
                 handle.remove()
         if len(dispersions) != len(model.residual_maps):
             raise RuntimeError("Expected one conditioning sample from every Chord site")
         # The terminal MLP has a position read and write but no consumed velocity.
+        result.update(velocity_metrics)
         spread = torch.stack(dispersions)
         if vector:
             result.update(dict(zip(("mean_alpha","token_std_alpha","force_projection_l2"),
@@ -56,7 +66,7 @@ def wrap_validation(evaluate):
             values = torch.cat((spread[:, :3].mean(0), spread[:-1, 3:].mean(0))).tolist()
             names = ("mu", "alpha_perp", "alpha_parallel", "beta", "gamma_parallel", "gamma_perp")
         result.update({f"token_std_{name}": value for name, value in zip(names, values, strict=True)})
-        if model.config.method in ("chordres_honly_mhc_mix", "chordres_update_soft_force"):
+        if model.config.method in ("chordres_honly_mhc_mix", "chordres_update_soft_force", "chordres_soft_force_h0_velocity"):
             scales = [site.mix_scales.detach() for site in model.residual_maps]
             summaries = torch.stack((torch.stack([s[0] for s in scales]).mean(),
                                      torch.stack([s[1] for s in scales]).mean(),

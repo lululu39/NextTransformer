@@ -1,0 +1,12 @@
+{
+  "name": "chordres_soft_force_h0_velocity",
+  "family": "residual",
+  "title": "Soft-force Chord with initial tangent velocity predicted from h0",
+  "options": {},
+  "shell": {
+    "layers": 23,
+    "mlp_width": 6144,
+    "window_pattern": "L"
+  },
+  "layer_multiple": 1
+}
