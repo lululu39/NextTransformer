@@ -1,0 +1,7 @@
+# Default ChordRes, full 49.152B-token schedule
+
+Use the admitted `chordres_update_soft_force` configuration with fixed zero initial velocity. The update is the soft-normalized F with tau 0.05, split position steps and three-gain tangent velocity mixing. Retain native-zero branch output projections, zero h-only dynamic matrices, learned scales starting at 0.01, the native attention value embeddings and the ordinary head.
+
+The full run uses the unmodified native optimizer. The static control biases, projection weights and modulation scales share one auxiliary AdamW group with base LR 0.0006 and peak LR 0.000848528137423857 after batch scaling (betas 0.9 and 0.95, zero decay). This explicitly changes the bias LR from the earlier [soft-force research run](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/2574b7dc), whose bias peak was 0.0024494897427831783.
+
+Start from seed 42, step 0, with the original ClimbMix order, 23 blocks, width 1536, FFN 6144, 2,048 context and 1,048,576 input tokens per update. Eight ranks use B8 and eight accumulation steps. Train through all 46,875 updates (49,152,000,000 input tokens). Warm up for 40 updates, then follow the complete native schedule. The evaluation includes all 189 validation points, six full CORE-22 events with 2,048-token left cropping for compatibility with the paired controls, and independent final train and validation BPB. Run the official cumulative audit locally. This is a fork-local experiment selected after earlier research comparisons.

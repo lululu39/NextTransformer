@@ -31,9 +31,11 @@ admission and within 2% cumulatively. Never change any of these to help one meth
 - Use native zero attention output and MLP down projections, h-only dynamic
   matrices initialized at zero, and three learnable modulation scales per
   consumed site starting at 0.01. Preserve the native attention value
-  embeddings and smear. The research optimizer uses peak AdamW 0.0024494897427831783
-  for the static controls and 0.000848528137423857 for their projections and
-  modulation scales. The reference research run is `2574b7dc`.
+  embeddings and smear. For new default runs, use the native
+  `nexttransformer.train` optimizer: static biases, h-only projection weights and
+  modulation scales share auxiliary AdamW with base LR 0.0006, or
+  0.000848528137423857 peak at the registered global batch. The historical
+  research control `2574b7dc` used static peak 0.0024494897427831783.
 - Keep named controls, historical runs, their initialization, and checkpoint
   configs intact. Document protocol exceptions separately for upstream submissions.
 
