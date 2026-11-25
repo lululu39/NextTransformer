@@ -23,13 +23,19 @@ admission and within 2% cumulatively. Never change any of these to help one meth
 
 ## Chord research defaults on this fork
 
-- For new Chord comparisons use the native zero initialization of attention
-  output and MLP down projections. Use the official optimizer initialization
-  and record any explicitly requested random-projection control separately.
-- The current h-only research line uses three per-token coefficients: a signed
-  lookahead, a single positive position step, and a sigmoid velocity retention.
-  Use validation BPB at shared updates to decide the 2,000-update screen.
-  Preserve each historical run's saved initialization and settings.
+- The default NextTransformer Chord is the calibrated
+  `configs/residual/chordres_update_soft_force.json` recipe, selected on
+  2026-11-25. Start each token at fixed v0 = 0. The position update uses
+  F / sqrt(mean(F²) + 0.05²) as its displacement, with split position steps,
+  spherical position retraction and the three-gain tangent velocity write.
+- Use native zero attention output and MLP down projections, h-only dynamic
+  matrices initialized at zero, and three learnable modulation scales per
+  consumed site starting at 0.01. Preserve the native attention value
+  embeddings and smear. The research optimizer uses peak AdamW 0.0024494897427831783
+  for the static controls and 0.000848528137423857 for their projections and
+  modulation scales. The reference research run is `2574b7dc`.
+- Keep named controls, historical runs, their initialization, and checkpoint
+  configs intact. Document protocol exceptions separately for upstream submissions.
 
 ## Running things
 
