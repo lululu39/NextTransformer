@@ -1,0 +1,12 @@
+{
+  "name": "chordres_update_soft_force",
+  "family": "residual",
+  "title": "Chord with update-based soft-normalized forces",
+  "options": {},
+  "shell": {
+    "layers": 23,
+    "mlp_width": 6144,
+    "window_pattern": "L"
+  },
+  "layer_multiple": 1
+}
