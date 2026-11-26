@@ -1,0 +1,122 @@
+{
+  "step": 46875,
+  "total_tokens": 524288,
+  "n_sequences": 256,
+  "context": 2048,
+  "split": "Even and odd validation data ranks; each half trains the per-ID and constant predictors once and is held out once. Each token is scored out of sample. Unseen ID predicts the fit-half constant.",
+  "aggregation": "Layer-specific predictors; sum squared errors across tokens and active sublayers separately for each effective coefficient. Known unused first/last controls excluded.",
+  "common_types": 1609,
+  "common_coverage": 0.7068099975585938,
+  "unseen_other_fold_fraction": 0.05102348327636719,
+  "all": {
+    "mu": {
+      "cv_r2": 0.745143,
+      "within_type_fraction": 0.17477
+    },
+    "alpha_perp": {
+      "cv_r2": 0.392054,
+      "within_type_fraction": 0.469368
+    },
+    "alpha_parallel": {
+      "cv_r2": 0.278677,
+      "within_type_fraction": 0.564655
+    },
+    "beta": {
+      "cv_r2": 0.728416,
+      "within_type_fraction": 0.185619
+    },
+    "gamma_parallel": {
+      "cv_r2": 0.613171,
+      "within_type_fraction": 0.278064
+    },
+    "gamma_perp": {
+      "cv_r2": 0.496893,
+      "within_type_fraction": 0.380576
+    }
+  },
+  "common_16_each_half": {
+    "mu": {
+      "cv_r2": 0.789077,
+      "within_type_fraction": 0.202067
+    },
+    "alpha_perp": {
+      "cv_r2": 0.437963,
+      "within_type_fraction": 0.537406
+    },
+    "alpha_parallel": {
+      "cv_r2": 0.344915,
+      "within_type_fraction": 0.62498
+    },
+    "beta": {
+      "cv_r2": 0.775602,
+      "within_type_fraction": 0.214995
+    },
+    "gamma_parallel": {
+      "cv_r2": 0.667774,
+      "within_type_fraction": 0.317787
+    },
+    "gamma_perp": {
+      "cv_r2": 0.560231,
+      "within_type_fraction": 0.419888
+    }
+  },
+  "first_4_layers": {
+    "mu": {
+      "cv_r2": 0.897001,
+      "within_type_fraction": 0.046227
+    },
+    "alpha_perp": {
+      "cv_r2": 0.768913,
+      "within_type_fraction": 0.137949
+    },
+    "alpha_parallel": {
+      "cv_r2": 0.79467,
+      "within_type_fraction": 0.115716
+    },
+    "beta": {
+      "cv_r2": 0.865453,
+      "within_type_fraction": 0.073546
+    },
+    "gamma_parallel": {
+      "cv_r2": 0.84884,
+      "within_type_fraction": 0.077266
+    },
+    "gamma_perp": {
+      "cv_r2": 0.919017,
+      "within_type_fraction": 0.036297
+    }
+  },
+  "last_4_layers": {
+    "mu": {
+      "cv_r2": 0.13582,
+      "within_type_fraction": 0.690867
+    },
+    "alpha_perp": {
+      "cv_r2": 0.099028,
+      "within_type_fraction": 0.725873
+    },
+    "alpha_parallel": {
+      "cv_r2": 0.095985,
+      "within_type_fraction": 0.722643
+    },
+    "beta": {
+      "cv_r2": 0.391832,
+      "within_type_fraction": 0.453181
+    },
+    "gamma_parallel": {
+      "cv_r2": 0.432641,
+      "within_type_fraction": 0.4106
+    },
+    "gamma_perp": {
+      "cv_r2": 0.158825,
+      "within_type_fraction": 0.664546
+    }
+  },
+  "run": "61fdbef5",
+  "method": "chordres_update_soft_force",
+  "initial_velocity": "fixed_zero",
+  "dataset": "ClimbMix validation; first 32 batch-one sequences from each of eight rank-disjoint row-group streams",
+  "distinct_input_sequences": 256,
+  "within_type_definition": "Within-ID SSE using both halves to estimate each ID mean, divided by the cross-fitted constant SSE; finite samples can understate this fraction.",
+  "common_definition": "At least 16 samples of the token ID in each fold."
+}

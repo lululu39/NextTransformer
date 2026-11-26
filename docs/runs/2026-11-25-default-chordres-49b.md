@@ -21,3 +21,9 @@ The local cumulative audit passed with no findings. All 46,875 updates, 49,152,0
 | Zero-initial-velocity Chord | 0.665465 | 0.662732 | 34.838 |
 | Official Dense Baseline | 0.667172 | 0.664460 | 33.095 |
 | Official Standard Residual | 0.673959 | 0.671214 | 31.951 |
+
+## Token identity and context at the endpoint
+
+Measured effective controls at step 46,875 on 256 distinct ClimbMix validation sequences (524,288 input tokens). Split the eight data ranks by parity so the folds use disjoint row groups. For each sublayer and coefficient, fit one mean per token ID in one fold and evaluate the other, then reverse the folds. Unseen IDs use the training-fold mean. Pool held-out squared errors across consumed sites and compare against one fitted constant per site. Fixed and structurally unused initial and terminal outputs are omitted.
+
+Token ID predicts 74.5% of the measured variation in lookahead, 72.8% in retention, 61.3% and 49.7% in the parallel and perpendicular velocity writes, and 27.9% and 39.2% in the parallel and perpendicular position steps. The corresponding lookahead scores are 89.7% in the first four layers and 13.6% in the last four. In the last four layers, 69.1% of lookahead variation occurs among occurrences of the same token ID even when each token mean uses the full panel. This analysis describes the trained gates and uses no loss intervention. [Detailed measurements](artifacts/chordres-final-token-type-controls.json)
