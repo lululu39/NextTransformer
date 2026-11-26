@@ -9,3 +9,15 @@ Start from seed 42, step 0, with the original ClimbMix order, 23 blocks, width 1
 ## Verified launch
 
 The [local full-budget W&B run](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/61fdbef5) uses revision `2ad650e7ad71`. The fork's native trainer, optimizer, compute ledger, checkpoint code and CORE evaluator match upstream main at `e4fb048b70a5`. Formal admission returned no findings. All eight ranks verified the same peak LR 0.000848528137 for all 419,738 Chord controls. A fresh optimizer and fresh data cursor started from step zero. The first full validation was 3.16874171 BPB. The first real training update was CE 10.39769365, gradient norm 0.421289, with the auxiliary learning rate 2.12132034e-05 on the 40-step warmup. The target is 46,875 updates with a local cumulative audit after the final evaluations.
+
+## Full-budget endpoint
+
+The local cumulative audit passed with no findings. All 46,875 updates, 49,152,000,000 input tokens, 189 periodic validations, six full CORE-22 evaluations and the independent final BPB evaluation completed. CORE used 2,048-token left cropping. The final eight-rank checkpoint is complete.
+
+| Model | Periodic validation BPB | Independent final validation BPB | CORE-22 (×100) |
+| --- | ---: | ---: | ---: |
+| Official mHC | 0.661665 | 0.658908 | 35.328 |
+| Official Block AttnRes | 0.662963 | 0.660217 | 33.997 |
+| Zero-initial-velocity Chord | 0.665465 | 0.662732 | 34.838 |
+| Official Dense Baseline | 0.667172 | 0.664460 | 33.095 |
+| Official Standard Residual | 0.673959 | 0.671214 | 31.951 |
