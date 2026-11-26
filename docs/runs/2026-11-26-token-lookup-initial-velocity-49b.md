@@ -1,5 +1,13 @@
 # Token lookup for the initial Chord velocity
 
+## Full-budget run selection
+
+On 2026-11-26, token lookup was selected for the learned-initial-velocity run through update 46,875 (49.152B tokens). Continue the existing run `3761f83a` with its six h-conditioned scalars and original schedule. The completed zero-velocity run provides the full-budget control. The projected-h0 run retains its step-2,500 checkpoint for reference. Further comparison of that initialization is deferred to smaller models.
+
+At the time of selection, lookup had lower periodic validation BPB at each of the nine shared evaluations from steps 250 to 2,250. At step 2,250 the scores were 0.806647 for lookup and 0.807065 for projected h0.
+
+## Training configuration
+
 The learned initial velocity comes from an untied vocabulary table instead of the projected-h0 control's shared linear map. Start all rows at zero and project the lookup onto the tangent plane at the same normalized post-smear position. Use the native token-embedding AdamW settings (peak 0.30, betas 0.8 and 0.995, weight decay 0.001). The lookup contains 50,331,648 parameters. Shared model parameters, initialization, native auxiliary learning rates and the subsequent Chord updates follow the projected-h0 experiment.
 
 Train the [calibrated configuration](../../configs/residual/chordres_soft_force_token_velocity.json) from scratch with seed 42 for 46,875 updates on 49.152B ClimbMix tokens. Use BF16, 2,048 context, 1,048,576 tokens per update, eight H100s, microbatch eight and eight accumulation steps. The input velocity, Chord position and branch states retain BF16. Keep attention value embeddings, soft force with tau 0.05, 40-step warmup, checkpoints, periodic validation and the full CORE-22 schedule. Dependencies use the same uv.lock as the two paired runs.
