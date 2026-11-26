@@ -1,0 +1,33 @@
+{
+  "id": "chordres_soft_force_token_velocity",
+  "name": "Soft-force Chord with token-indexed initial velocity",
+  "family": "residual",
+  "tagline": "One learnable initial tangent velocity per vocabulary item.",
+  "description": "Look up a token-specific velocity, project it into the tangent plane at the post-smear position and apply the native soft-force Chord updates.",
+  "mechanism": [
+    "Zero-initialized untied token velocity table in the input embedding optimizer group",
+    "Shared Triton tangent projection with BF16 states and FP32 reductions",
+    "Update-based soft force and h-only controls"
+  ],
+  "limitations": "Local 49.152B-token paired comparison.",
+  "diagram": "custom",
+  "architecture": {
+    "kind": "custom",
+    "nodes": [
+      "Normalized position",
+      "Scalar-recipe token controls",
+      "Physical lookahead and tangent write",
+      "Final h → LM head"
+    ],
+    "loop": false
+  },
+  "blocks": 23,
+  "ffn": 6144,
+  "params": 1406561954,
+  "flops": 4.687104176069867,
+  "error": 0.31473880430790135,
+  "codeUrl": "https://github.com/lululu39/NextTransformer/tree/chordres-zero/nexttransformer/methods/chordres_soft_force_token_velocity",
+  "sourceUrl": "https://github.com/lululu39/NextTransformer/blob/chordres-zero/nexttransformer/methods/chordres_soft_force_token_velocity/README.md",
+  "cohort": "reference-v1",
+  "costModel": "reference-aten-math-v2"
+}

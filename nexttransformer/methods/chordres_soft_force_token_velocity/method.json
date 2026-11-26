@@ -1,0 +1,12 @@
+{
+  "name": "chordres_soft_force_token_velocity",
+  "family": "residual",
+  "title": "Soft-force Chord with token-indexed initial tangent velocity",
+  "options": {},
+  "shell": {
+    "layers": 23,
+    "mlp_width": 6144,
+    "window_pattern": "L"
+  },
+  "layer_multiple": 1
+}
