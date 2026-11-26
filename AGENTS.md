@@ -23,11 +23,18 @@ admission and within 2% cumulatively. Never change any of these to help one meth
 
 ## Chord research defaults on this fork
 
-- The default NextTransformer Chord is the calibrated
+- The zero-initial-velocity reference for NextTransformer Chord is the calibrated
   `configs/residual/chordres_update_soft_force.json` recipe, selected on
   2026-11-25. Start each token at fixed v0 = 0. The position update uses
   F / sqrt(mean(F²) + 0.05²) as its displacement, with split position steps,
   spherical position retraction and the three-gain tangent velocity write.
+- Use six h-only, token-dependent controls as the default for new Chord runs:
+  lookahead μ, parallel and perpendicular position steps, old-velocity
+  retention β, and parallel and perpendicular velocity-write gains. The final
+  sublayer only consumes the read and position controls. Use static controls
+  for explicit ablations. The remaining architecture choice is the source of
+  initial velocity: fixed zero, a projection of normalized h0, or an
+  independent token lookup.
 - Use native zero attention output and MLP down projections, h-only dynamic
   matrices initialized at zero, and three learnable modulation scales per
   consumed site starting at 0.01. Preserve the native attention value
