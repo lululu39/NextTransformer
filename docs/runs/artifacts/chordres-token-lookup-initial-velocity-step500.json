@@ -1,0 +1,43 @@
+{
+  "model": "chordres_soft_force_token_velocity",
+  "run": "3761f83a",
+  "data": "First eight batch-one ClimbMix validation rows per rank, 8 ranks, context 2048",
+  "ablations": "Set only the separate initial velocity table to zero, or permute its lookup token IDs within each rank using CPU torch.randperm seeded with 20261126 + rank. All ordinary token and attention value embeddings retain the original token IDs.",
+  "interval": "Percentile paired bootstrap of 64 sequence-mean CE changes, 10000 draws, seed 20261126",
+  "step": 500,
+  "sequences": 64,
+  "tokens": 131072,
+  "base_ce": 3.18489975270406,
+  "base_bpb": 0.977400014400336,
+  "raw_velocity_table_rms": 5.412232696107306,
+  "raw_token_embedding_rms": 4.304041010369825,
+  "projected_v0_rms": 5.439158751425049,
+  "first_mu_mean": 0.034223033084440545,
+  "first_mu_rms": 0.07252825061622593,
+  "first_lookahead_rms_relative_to_position": 0.3802248410174767,
+  "shuffled_same_token_fraction": 0.0060882568359375,
+  "zero": {
+    "ce": 3.2069664934588995,
+    "delta_ce": 0.022066740754839276,
+    "delta_bpb": 0.006773091616847924,
+    "row_bootstrap_delta_ce_95": [
+      0.0203379249892596,
+      0.023868974654246224
+    ],
+    "rows_with_loss_increase": 64,
+    "changed_top1_fraction": 0.07694244384765625,
+    "mean_abs_token_delta_ce": 0.13655634714099218
+  },
+  "shuffled": {
+    "ce": 3.1984078394646698,
+    "delta_ce": 0.013508086760609855,
+    "delta_bpb": 0.004139098279271353,
+    "row_bootstrap_delta_ce_95": [
+      0.012306318595045244,
+      0.014687977921957081
+    ],
+    "rows_with_loss_increase": 64,
+    "changed_top1_fraction": 0.06145477294921875,
+    "mean_abs_token_delta_ce": 0.10993019715651212
+  }
+}
