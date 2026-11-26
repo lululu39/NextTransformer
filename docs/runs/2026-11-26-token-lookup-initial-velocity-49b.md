@@ -1,5 +1,11 @@
 # Token lookup for the initial Chord velocity
 
+## Fresh full-budget run
+
+The [active lookup run](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/3d1ac486) starts independently at update zero and targets 46,875 updates on 49.152B tokens. It uses the original lookup run's calibrated configuration, seed 42, frozen source at `a9220df6a4d4`, uv lock, ClimbMix stream and optimizer groups. Its production model, optimizer and stream start fresh after a separate eight-rank preflight. The launcher uses `--resume never` and exits on interruption, while preserving checkpoints. Token lookup is the default initial velocity. Projected h0 and fixed zero remain available as alternatives.
+
+The earlier [lookup run](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/3761f83a) retains its full step-5,000 checkpoint. Its [projected-h0 comparison](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/58d95ca4) stopped at logged step 3,340 on user request, with a complete step-3,000 checkpoint.
+
 ## Full-budget run selection
 
 On 2026-11-26, token lookup was selected for the learned-initial-velocity run through update 46,875 (49.152B tokens). Continue the existing run `3761f83a` with its six h-conditioned scalars and original schedule. The completed zero-velocity run provides the full-budget control. The projected-h0 run retains its step-2,500 checkpoint for reference. Further comparison of that initialization is deferred to smaller models.
