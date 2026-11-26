@@ -6,6 +6,10 @@ On 2026-11-26, token lookup was selected for the learned-initial-velocity run th
 
 At the time of selection, lookup had lower periodic validation BPB at each of the nine shared evaluations from steps 250 to 2,250. At step 2,250 the scores were 0.806647 for lookup and 0.807065 for projected h0.
 
+### Matched 5,000-step comparison
+
+The lookup run paused at update 5,000 on November 26 after validation at 0.78628687 BPB. The retained checkpoint contains model weights and all eight rank shards, including optimizer state, RNG and data cursors. The [projected-h0 continuation](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/e1c681f3) resumed from its original update-2,500 checkpoint with the same training configuration, software and 46,875-step learning-rate schedule. W&B linked it to its [original run](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/58d95ca4), which had logged unsaved iterations through 2,690. Both variants use the same 41,943,040-token periodic validation at every 250 updates.
+
 ## Training configuration
 
 The learned initial velocity comes from an untied vocabulary table instead of the projected-h0 control's shared linear map. Start all rows at zero and project the lookup onto the tangent plane at the same normalized post-smear position. Use the native token-embedding AdamW settings (peak 0.30, betas 0.8 and 0.995, weight decay 0.001). The lookup contains 50,331,648 parameters. Shared model parameters, initialization, native auxiliary learning rates and the subsequent Chord updates follow the projected-h0 experiment.
