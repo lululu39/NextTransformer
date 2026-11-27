@@ -6,6 +6,12 @@ The [active lookup run](https://wandb.ai/yibozhong657-none/nexttransformer-chord
 
 The earlier [lookup run](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/3761f83a) retains its full step-5,000 checkpoint. Its [projected-h0 comparison](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/58d95ca4) stopped at logged step 3,340 on user request, with a complete step-3,000 checkpoint.
 
+### Conditional velocity-geometry comparison
+
+Use the active fresh lookup run as the tangent control. After the [nanochat transport run](https://wandb.ai/yibozhong657-none/nanochat-1b/runs/649f80ab) finishes, compare its endpoint CE with the matched [ambient](https://wandb.ai/yibozhong657-none/nanochat-1b/runs/011078b9) and [projection-only](https://wandb.ai/yibozhong657-none/nanochat-1b/runs/aa44a2d7) runs. If ambient wins the three-way comparison, the next experiment is a fresh NextTransformer lookup run that changes only velocity geometry. The nanochat comparison starts from rest. The NextTransformer comparison keeps its independent zero-initialized trainable token table.
+
+Follow the [nanochat implementation](https://github.com/yibozhong/nanochat/blob/0a1cf8bc8/research/chord-velocity-geometry/REPORT.md). Use the raw velocity lookup, normalize the lookahead using the actual RMS of h + μv, and split the full displacement h′ − h relative to the carried velocity v. Keep the radial component in the resulting velocity. Position stays on the unit-RMS sphere. Retain the six h-conditioned controls, soft force, BF16, training data order, native optimizer groups, schedule and evaluation protocol.
+
 ## Full-budget run selection
 
 On 2026-11-26, token lookup was selected for the learned-initial-velocity run through update 46,875 (49.152B tokens). Continue the existing run `3761f83a` with its six h-conditioned scalars and original schedule. The completed zero-velocity run provides the full-budget control. The projected-h0 run retains its step-2,500 checkpoint for reference. Further comparison of that initialization is deferred to smaller models.
