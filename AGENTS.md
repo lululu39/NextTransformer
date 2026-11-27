@@ -23,17 +23,18 @@ admission and within 2% cumulatively. Never change any of these to help one meth
 
 ## Chord research defaults on this fork
 
-- Default new Chord runs to ambient velocity. Keep the position on the
-  unit-RMS sphere, read the lookahead with the actual RMS of h + μv, and
-  split the full position displacement along the incoming ambient velocity.
-  Keep its radial component in the velocity write.
-- Use [token lookup](configs/residual/chordres_ambient_lookup.json) by
-  default, with the independent zero-initialized table in the native token
-  embedding AdamW group. The [projected-h0 option](configs/residual/chordres_ambient_projected_h0.json)
-  uses a shared zero-initialized native Muon matrix on normalized post-smear
-  h0. The [zero-start option](configs/residual/chordres_ambient_zero.json)
-  starts every token at rest. All three use the existing soft force at τ=0.05
-  and six-control update.
+- Default new Chord runs to simple tangent projection (project-only). Keep
+  the position on the unit-RMS sphere and project the velocity update to the
+  tangent plane at the new position. Use ambient velocity for named ablations.
+- Use [token lookup](configs/residual/chordres_soft_force_token_velocity.json)
+  by default, with the independent zero-initialized table in the native token
+  embedding AdamW group. The [projected-h0 option](configs/residual/chordres_soft_force_h0_velocity.json)
+  uses a shared zero-initialized native Muon matrix on normalized post-smear h0.
+  Both project the initial vector onto the tangent plane at h0.
+  The [zero-start option](configs/residual/chordres_update_soft_force.json)
+  starts every token at rest. Its [completed 49.152B-token control](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/61fdbef5)
+  supplies the zero-start endpoint. All three use soft force at τ=0.05 and the
+  same six-control update.
 - Use six h-only, token-dependent controls as the default for new Chord runs:
   lookahead μ, parallel and perpendicular position steps, old-velocity
   retention β, and parallel and perpendicular velocity-write gains. The final

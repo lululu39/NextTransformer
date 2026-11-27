@@ -9,3 +9,7 @@ At the owner's request, finish the tangent control's scheduled 5,000-step valida
 ## Verified launch
 
 The tangent control stopped at 5,000 updates with validation BPB 0.78643397. The ambient preflight matched all 444 initial model tensors and initial logits to the tangent lookup control, completed three full-batch updates and saved a complete test checkpoint. All eight production ranks verified fresh initialization. The [independent ambient run](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/226e0d29) completed its first production update with LM loss 10.39769365 and initial periodic validation BPB 3.16874171.
+
+## Requested stop
+
+Ambient training stopped after step 3,000 on November 27 UTC at the owner’s request. Its full eight-rank step-3,000 checkpoint is available for this ablation. The GPUs passed to a fresh project-only run using the token-lookup initial velocity.
