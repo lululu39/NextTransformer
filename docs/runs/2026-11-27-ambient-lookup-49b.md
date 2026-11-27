@@ -1,0 +1,11 @@
+# Ambient velocity with token lookup
+
+Compare the [ambient lookup preset](../../configs/residual/chordres_ambient_lookup.json) with the [fresh tangent lookup control](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/3d1ac486). Train independently from seed 42 using the same ClimbMix order, 23 layers, width 1,536, FFN 6,144, gated attention value embeddings, smear, six h-conditioned coefficients and soft force at τ=0.05. Use BF16 and the same dependency lock, eight H100s, per-rank microbatch 8, accumulation 8, context 2,048 and 1,048,576 tokens per update. The registered schedule is 46,875 updates and 49.152B tokens. The new run starts with a fresh model, optimizer, data stream and W&B ID. It preserves checkpoints and requires an explicit decision after any interruption.
+
+Only velocity geometry changes. Use the raw token-indexed initial velocity, read h + μv with its actual RMS, and update v with the full chord displacement while preserving radial motion. Position remains on the unit-RMS sphere. The lookup is initialized to zero with native embedding AdamW peak LR 0.30. Static biases, dynamic matrices and modulation scales use native auxiliary AdamW peak LR 0.000848528137. All 441 trainable tensors match the paired control in names and optimizer settings. Parameter count is 1,406,561,954. The [compute ledger](../../evidence/costs/chordres-ambient-v1/chordres_ambient_lookup.json) gives 4.683664 GFLOPs per token, 0.2411% above the anchor. The frozen implementation revision is `26ec46f2e61e`.
+
+At the owner's request, finish the tangent control's scheduled 5,000-step validation and retain its full eight-rank checkpoint before transferring the GPUs. The two validation curves use the same 41,943,040 input tokens every 250 training updates.
+
+## Verified launch
+
+The tangent control stopped at 5,000 updates with validation BPB 0.78643397. The ambient preflight matched all 444 initial model tensors and initial logits to the tangent lookup control, completed three full-batch updates and saved a complete test checkpoint. All eight production ranks verified fresh initialization. The [independent ambient run](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/226e0d29) completed its first production update with LM loss 10.39769365 and initial periodic validation BPB 3.16874171.

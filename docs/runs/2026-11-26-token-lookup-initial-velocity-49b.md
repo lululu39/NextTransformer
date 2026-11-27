@@ -2,7 +2,9 @@
 
 ## Fresh full-budget run
 
-The [active lookup run](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/3d1ac486) starts independently at update zero and targets 46,875 updates on 49.152B tokens. It uses the original lookup run's calibrated configuration, seed 42, frozen source at `a9220df6a4d4`, uv lock, ClimbMix stream and optimizer groups. Its production model, optimizer and stream start fresh after a separate eight-rank preflight. The launcher uses `--resume never` and exits on interruption, while preserving checkpoints. Token lookup is the default initial velocity. Projected h0 and fixed zero remain available as alternatives.
+This run paused at step 5,000 with periodic validation BPB 0.786434 and a retained complete eight-rank checkpoint. The [ambient lookup run](2026-11-27-ambient-lookup-49b.md) took the GPUs at the owner's request.
+
+The [fresh tangent lookup run](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/3d1ac486) starts independently at update zero and targets 46,875 updates on 49.152B tokens. It uses the original lookup run's calibrated configuration, seed 42, frozen source at `a9220df6a4d4`, uv lock, ClimbMix stream and optimizer groups. Its production model, optimizer and stream start fresh after a separate eight-rank preflight. The launcher uses `--resume never` and exits on interruption, while preserving checkpoints. Token lookup is the default initial velocity. Projected h0 and fixed zero remain available as alternatives.
 
 The earlier [lookup run](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/3761f83a) retains its full step-5,000 checkpoint. Its [projected-h0 comparison](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/58d95ca4) stopped at logged step 3,340 on user request, with a complete step-3,000 checkpoint.
 
