@@ -1,0 +1,12 @@
+{
+  "name": "chordres_static_six_lookup",
+  "family": "residual",
+  "title": "Static six-control Chord with tangent velocity and token lookup",
+  "options": {},
+  "shell": {
+    "layers": 23,
+    "mlp_width": 6144,
+    "window_pattern": "L"
+  },
+  "layer_multiple": 1
+}
