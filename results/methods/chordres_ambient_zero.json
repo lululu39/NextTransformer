@@ -1,0 +1,32 @@
+{
+  "id": "chordres_ambient_zero",
+  "name": "Ambient-velocity Chord with zero initial velocity",
+  "family": "residual",
+  "tagline": "Six token-dependent Chord controls with a unit-RMS position and ambient velocity.",
+  "description": "Use the full RMS for the lookahead and carry ambient velocity and chord displacement into the velocity write.",
+  "mechanism": [
+    "Spherical position with a soft-normalized update",
+    "Parallel and perpendicular writes along the incoming ambient velocity"
+  ],
+  "limitations": "Calibration and implementation checks are separate from full-budget training results.",
+  "diagram": "custom",
+  "architecture": {
+    "kind": "custom",
+    "nodes": [
+      "Position and velocity",
+      "Token-dependent read",
+      "Ambient velocity update",
+      "Final position"
+    ],
+    "loop": false
+  },
+  "blocks": 23,
+  "ffn": 6144,
+  "params": 1356230306,
+  "flops": 4.683636871069858,
+  "error": 0.24053055495711906,
+  "codeUrl": "https://github.com/lululu39/NextTransformer/tree/chordres-zero/nexttransformer/methods/chordres_ambient_zero",
+  "sourceUrl": "https://github.com/lululu39/NextTransformer/blob/chordres-zero/nexttransformer/methods/chordres_ambient_lookup/README.md",
+  "cohort": "reference-v1",
+  "costModel": "reference-aten-math-v2"
+}

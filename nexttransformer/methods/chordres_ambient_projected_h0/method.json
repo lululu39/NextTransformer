@@ -1,0 +1,12 @@
+{
+  "name": "chordres_ambient_projected_h0",
+  "family": "residual",
+  "title": "Ambient-velocity Chord with projected h0",
+  "options": {},
+  "shell": {
+    "layers": 23,
+    "mlp_width": 6144,
+    "window_pattern": "L"
+  },
+  "layer_multiple": 1
+}

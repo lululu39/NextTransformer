@@ -23,16 +23,17 @@ admission and within 2% cumulatively. Never change any of these to help one meth
 
 ## Chord research defaults on this fork
 
-- For new Chord runs, use [token lookup](configs/residual/chordres_soft_force_token_velocity.json)
-  by default. Each token has a trainable initial velocity in an independent
-  zero-initialized table, using the native token embedding AdamW group.
-  The second option is [projected h0](configs/residual/chordres_soft_force_h0_velocity.json),
-  which applies a shared zero-initialized matrix to the normalized post-smear
-  position using native matrix Muon. Both project the result into the
-  tangent plane at h0. The [zero-start mode](configs/residual/chordres_update_soft_force.json)
-  sets v0 to zero on every forward pass and learns velocity along depth.
-- All three modes use F / sqrt(mean(F²) + 0.05²) as the displacement, with split
-  position steps, spherical position retraction and the three-gain tangent velocity write.
+- Default new Chord runs to ambient velocity. Keep the position on the
+  unit-RMS sphere, read the lookahead with the actual RMS of h + μv, and
+  split the full position displacement along the incoming ambient velocity.
+  Keep its radial component in the velocity write.
+- Use [token lookup](configs/residual/chordres_ambient_lookup.json) by
+  default, with the independent zero-initialized table in the native token
+  embedding AdamW group. The [projected-h0 option](configs/residual/chordres_ambient_projected_h0.json)
+  uses a shared zero-initialized native Muon matrix on normalized post-smear
+  h0. The [zero-start option](configs/residual/chordres_ambient_zero.json)
+  starts every token at rest. All three use the existing soft force at τ=0.05
+  and six-control update.
 - Use six h-only, token-dependent controls as the default for new Chord runs:
   lookahead μ, parallel and perpendicular position steps, old-velocity
   retention β, and parallel and perpendicular velocity-write gains. The final
