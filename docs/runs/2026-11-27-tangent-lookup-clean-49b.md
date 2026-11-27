@@ -7,3 +7,7 @@ Start independently at step zero with seed 42, an empty optimizer and the beginn
 ## Verified launch
 
 The eight-rank preflight completed three full-batch updates. All eight production ranks verified fresh optimizer groups. The [new run](https://wandb.ai/yibozhong657-none/nexttransformer-chordres/runs/3ac13380) matched the original seed-42 control's step-zero BPB (3.16874171) and first production LM loss (10.39769365).
+
+## Effective lookahead at update 500
+
+All 46 sublayers learned nonzero static lookahead biases and nonzero h-dependent lookahead rows. On 131,072 ClimbMix validation tokens the effective μ had a positive RMS and nonzero token-wise standard deviation at all 46 sites. First attention had bias -0.000271, effective μ RMS 0.07674, and RMS(μv)/RMS(h) of 40.09%. The median sublayer offset ratio was 36.67% (range 2.77–67.40%). The archived 5k lookup control also had nonzero biases and dynamic lookahead rows at all 46 sites. The complete fixed-zero-velocity control had 45 such sites, with a structurally unused first attention lookahead. [Per-sublayer results](artifacts/chordres-clean-lookup-step500-mu.json)

@@ -1,0 +1,470 @@
+{
+  "run": "3ac13380",
+  "training_step": 500,
+  "tokens": 131072,
+  "site_count": 46,
+  "site_stats": [
+    {
+      "sublayer": 1,
+      "block": 1,
+      "branch": "Attention",
+      "mu_mean": 0.037756919768998226,
+      "mu_rms": 0.07674465215100117,
+      "mu_std": 0.06681434459257682,
+      "relative_offset_rms": 0.4008954664700952,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 2,
+      "block": 1,
+      "branch": "MLP",
+      "mu_mean": -0.078560513114794,
+      "mu_rms": 0.11395218685575434,
+      "mu_std": 0.08254299890571598,
+      "relative_offset_rms": 0.3313872293421108,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 3,
+      "block": 2,
+      "branch": "Attention",
+      "mu_mean": -0.057894741282651006,
+      "mu_rms": 0.10990509057323998,
+      "mu_std": 0.09342016840986206,
+      "relative_offset_rms": 0.15764180143458098,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 4,
+      "block": 2,
+      "branch": "MLP",
+      "mu_mean": -0.1901344645250905,
+      "mu_rms": 0.33827286434383386,
+      "mu_std": 0.2797810146366957,
+      "relative_offset_rms": 0.33902161610030435,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 5,
+      "block": 3,
+      "branch": "Attention",
+      "mu_mean": 0.22047846402797328,
+      "mu_rms": 0.5680523494186778,
+      "mu_std": 0.523519549377046,
+      "relative_offset_rms": 0.16968539919793488,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 6,
+      "block": 3,
+      "branch": "MLP",
+      "mu_mean": 0.012851653512391946,
+      "mu_rms": 0.6520690595093639,
+      "mu_std": 0.6519424003479324,
+      "relative_offset_rms": 0.11888692514384805,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 7,
+      "block": 4,
+      "branch": "Attention",
+      "mu_mean": 1.3923134362235885,
+      "mu_rms": 1.5199506608793623,
+      "mu_std": 0.6096829559852179,
+      "relative_offset_rms": 0.15258092461452025,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 8,
+      "block": 4,
+      "branch": "MLP",
+      "mu_mean": 2.388010086627446,
+      "mu_rms": 2.468600443511548,
+      "mu_std": 0.6256164766620104,
+      "relative_offset_rms": 0.34036177178297866,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 9,
+      "block": 5,
+      "branch": "Attention",
+      "mu_mean": 2.844373703196652,
+      "mu_rms": 2.8953537645309586,
+      "mu_std": 0.5409359096482301,
+      "relative_offset_rms": 0.3035493811448949,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 10,
+      "block": 5,
+      "branch": "MLP",
+      "mu_mean": 4.0982766519309735,
+      "mu_rms": 4.153647041647805,
+      "mu_std": 0.6759528318063411,
+      "relative_offset_rms": 0.4297676447417009,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 11,
+      "block": 6,
+      "branch": "Attention",
+      "mu_mean": 3.3636624662694885,
+      "mu_rms": 3.385633223242734,
+      "mu_std": 0.3850806867850518,
+      "relative_offset_rms": 0.3127631610532091,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 12,
+      "block": 6,
+      "branch": "MLP",
+      "mu_mean": 4.775472895724306,
+      "mu_rms": 4.796947586121005,
+      "mu_std": 0.4533925078722095,
+      "relative_offset_rms": 0.5570140868928835,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 13,
+      "block": 7,
+      "branch": "Attention",
+      "mu_mean": 2.781106079338315,
+      "mu_rms": 2.8064496013643874,
+      "mu_std": 0.37630883655024067,
+      "relative_offset_rms": 0.32609412981769575,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 14,
+      "block": 7,
+      "branch": "MLP",
+      "mu_mean": 4.624025917923063,
+      "mu_rms": 4.651940796510468,
+      "mu_std": 0.5088590026856344,
+      "relative_offset_rms": 0.4903431610228506,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 15,
+      "block": 8,
+      "branch": "Attention",
+      "mu_mean": 3.658803679072662,
+      "mu_rms": 3.670413094450873,
+      "mu_std": 0.29169834062055705,
+      "relative_offset_rms": 0.3930719669400297,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 16,
+      "block": 8,
+      "branch": "MLP",
+      "mu_mean": 4.212778853057898,
+      "mu_rms": 4.228644086177871,
+      "mu_std": 0.3659578429208202,
+      "relative_offset_rms": 0.5133918607035621,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 17,
+      "block": 9,
+      "branch": "Attention",
+      "mu_mean": 3.529845676957848,
+      "mu_rms": 3.5382785458511976,
+      "mu_std": 0.24414046140051845,
+      "relative_offset_rms": 0.46939554467827554,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 18,
+      "block": 9,
+      "branch": "MLP",
+      "mu_mean": 3.447817800262783,
+      "mu_rms": 3.4612679041931673,
+      "mu_std": 0.3048408122100237,
+      "relative_offset_rms": 0.45318328507854694,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 19,
+      "block": 10,
+      "branch": "Attention",
+      "mu_mean": 2.9401525928660703,
+      "mu_rms": 2.944861370232314,
+      "mu_std": 0.16646687523188128,
+      "relative_offset_rms": 0.34977293106944934,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 20,
+      "block": 10,
+      "branch": "MLP",
+      "mu_mean": 3.517250518036235,
+      "mu_rms": 3.538647869537817,
+      "mu_std": 0.3885582812891377,
+      "relative_offset_rms": 0.5012732592105531,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 21,
+      "block": 11,
+      "branch": "Attention",
+      "mu_mean": 2.6910283972292746,
+      "mu_rms": 2.7019060568211284,
+      "mu_std": 0.24220343761462262,
+      "relative_offset_rms": 0.3200080417989979,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 22,
+      "block": 11,
+      "branch": "MLP",
+      "mu_mean": 3.4960941051122063,
+      "mu_rms": 3.5177827167477376,
+      "mu_std": 0.39002724321356563,
+      "relative_offset_rms": 0.3780551066620526,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 23,
+      "block": 12,
+      "branch": "Attention",
+      "mu_mean": 4.528672832338998,
+      "mu_rms": 4.535622312015808,
+      "mu_std": 0.2509823397976461,
+      "relative_offset_rms": 0.45890549622741833,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 24,
+      "block": 12,
+      "branch": "MLP",
+      "mu_mean": 4.26857685741561,
+      "mu_rms": 4.286715145866668,
+      "mu_std": 0.39392683856087635,
+      "relative_offset_rms": 0.46804929072897267,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 25,
+      "block": 13,
+      "branch": "Attention",
+      "mu_mean": 4.617684384232234,
+      "mu_rms": 4.629959784879693,
+      "mu_std": 0.33692512108922185,
+      "relative_offset_rms": 0.4219784017565331,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 26,
+      "block": 13,
+      "branch": "MLP",
+      "mu_mean": 5.349085094061593,
+      "mu_rms": 5.3633493892494934,
+      "mu_std": 0.3909032203128993,
+      "relative_offset_rms": 0.3748254635334987,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 27,
+      "block": 14,
+      "branch": "Attention",
+      "mu_mean": 5.6287875740199524,
+      "mu_rms": 5.635323560745552,
+      "mu_std": 0.2713338918242714,
+      "relative_offset_rms": 0.6102618620149377,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 28,
+      "block": 14,
+      "branch": "MLP",
+      "mu_mean": 4.070201918257226,
+      "mu_rms": 4.081155573856186,
+      "mu_std": 0.29880957587168366,
+      "relative_offset_rms": 0.46567051824596134,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 29,
+      "block": 15,
+      "branch": "Attention",
+      "mu_mean": 4.651137263601413,
+      "mu_rms": 4.658239178316438,
+      "mu_std": 0.25712720109036785,
+      "relative_offset_rms": 0.5517680313272715,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 30,
+      "block": 15,
+      "branch": "MLP",
+      "mu_mean": 4.680928680487341,
+      "mu_rms": 4.688616368044098,
+      "mu_std": 0.2683843044629655,
+      "relative_offset_rms": 0.4408195229554913,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 31,
+      "block": 16,
+      "branch": "Attention",
+      "mu_mean": 5.704645639800219,
+      "mu_rms": 5.713178005740833,
+      "mu_std": 0.312123452481777,
+      "relative_offset_rms": 0.6739502084286452,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 32,
+      "block": 16,
+      "branch": "MLP",
+      "mu_mean": 4.2647109113841,
+      "mu_rms": 4.270243009399605,
+      "mu_std": 0.21729289368868127,
+      "relative_offset_rms": 0.39472199054393264,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 33,
+      "block": 17,
+      "branch": "Attention",
+      "mu_mean": 6.04559894070735,
+      "mu_rms": 6.054841890904649,
+      "mu_std": 0.3344305189003467,
+      "relative_offset_rms": 0.44876314379552057,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 34,
+      "block": 17,
+      "branch": "MLP",
+      "mu_mean": 6.699273593912949,
+      "mu_rms": 6.7167959114095614,
+      "mu_std": 0.4848511415155025,
+      "relative_offset_rms": 0.3611682239247905,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 35,
+      "block": 18,
+      "branch": "Attention",
+      "mu_mean": 5.331760707345893,
+      "mu_rms": 5.3410066742713935,
+      "mu_std": 0.3141338157760052,
+      "relative_offset_rms": 0.5304998690082925,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 36,
+      "block": 18,
+      "branch": "MLP",
+      "mu_mean": 4.489157666574101,
+      "mu_rms": 4.497462039157346,
+      "mu_std": 0.27318169466551756,
+      "relative_offset_rms": 0.37221704708581743,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 37,
+      "block": 19,
+      "branch": "Attention",
+      "mu_mean": 3.436614554327207,
+      "mu_rms": 3.452053224515808,
+      "mu_std": 0.32611634408045287,
+      "relative_offset_rms": 0.23660721831814824,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 38,
+      "block": 19,
+      "branch": "MLP",
+      "mu_mean": 5.5535812522575725,
+      "mu_rms": 5.573879310189247,
+      "mu_std": 0.4752534472562771,
+      "relative_offset_rms": 0.2844863328921929,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 39,
+      "block": 20,
+      "branch": "Attention",
+      "mu_mean": 2.370353943113514,
+      "mu_rms": 2.380268998576533,
+      "mu_std": 0.21703154137301553,
+      "relative_offset_rms": 0.25430271962922013,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 40,
+      "block": 20,
+      "branch": "MLP",
+      "mu_mean": 2.9913536192225365,
+      "mu_rms": 3.003617588339295,
+      "mu_std": 0.2711496666886995,
+      "relative_offset_rms": 0.24840414011430637,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 41,
+      "block": 21,
+      "branch": "Attention",
+      "mu_mean": 0.30985483442137707,
+      "mu_rms": 0.3536408828830886,
+      "mu_std": 0.17044604903614333,
+      "relative_offset_rms": 0.027669665981569516,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 42,
+      "block": 21,
+      "branch": "MLP",
+      "mu_mean": 2.361481623012878,
+      "mu_rms": 2.3815498219673668,
+      "mu_std": 0.3085192031061595,
+      "relative_offset_rms": 0.16282982160841866,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 43,
+      "block": 22,
+      "branch": "Attention",
+      "mu_mean": 0.1692751813594228,
+      "mu_rms": 0.27061003528611854,
+      "mu_std": 0.21112959094662417,
+      "relative_offset_rms": 0.058300316809931,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 44,
+      "block": 22,
+      "branch": "MLP",
+      "mu_mean": 0.6811846842551859,
+      "mu_rms": 0.6939438282142504,
+      "mu_std": 0.13245928677450977,
+      "relative_offset_rms": 0.10809590377945198,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 45,
+      "block": 23,
+      "branch": "Attention",
+      "mu_mean": -1.03243949378475,
+      "mu_rms": 1.0414807189901936,
+      "mu_std": 0.1369334864151921,
+      "relative_offset_rms": 0.1527449174774957,
+      "nonzero_fraction": 1.0
+    },
+    {
+      "sublayer": 46,
+      "block": 23,
+      "branch": "MLP",
+      "mu_mean": 0.34727288539397705,
+      "mu_rms": 0.3539066259927674,
+      "mu_std": 0.06820148819289969,
+      "relative_offset_rms": 0.04593783232148603,
+      "nonzero_fraction": 1.0
+    }
+  ],
+  "data": "First 8 ClimbMix validation sequences from each of 8 ranks; 2048 tokens per sequence.",
+  "relative_offset_definition": "sqrt(total squared mu*v / total squared h) at the input to each read."
+}
