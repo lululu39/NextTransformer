@@ -1,0 +1,12 @@
+{
+  "name": "chordres_soft_force_zero_no_ve",
+  "family": "residual",
+  "title": "Zero-start soft-force tangent Chord without attention value embeddings",
+  "options": {},
+  "shell": {
+    "layers": 23,
+    "mlp_width": 6144,
+    "window_pattern": "L"
+  },
+  "layer_multiple": 1
+}

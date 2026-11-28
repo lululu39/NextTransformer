@@ -6,7 +6,7 @@ def wrap_validation(evaluate):
     def measured(model, *args, **kwargs):
         amplitude = model.config.method == "chordres_force_amplitude_step"
         vector = model.config.method == "chordres_force_vector_step"
-        if kwargs["rank"] != 0 or (not (amplitude or vector) and model.config.method not in ("chordres_token_controls", "chordres_token_controls_vnorm", "chordres_token_controls_joint_rms", "chordres_joint_gate_bounded", "chordres_honly_free", "chordres_honly_small_dynamic", "chordres_honly_mhc_mix", "chordres_update_soft_force", "chordres_soft_force_h0_velocity", "chordres_honly_scalar_recipe", "chordres_honly_single_step")):
+        if kwargs["rank"] != 0 or (not (amplitude or vector) and model.config.method not in ("chordres_token_controls", "chordres_token_controls_vnorm", "chordres_token_controls_joint_rms", "chordres_joint_gate_bounded", "chordres_honly_free", "chordres_honly_small_dynamic", "chordres_honly_mhc_mix", "chordres_update_soft_force", "chordres_soft_force_zero_no_ve", "chordres_soft_force_h0_velocity", "chordres_honly_scalar_recipe", "chordres_honly_single_step")):
             return evaluate(model, *args, **kwargs)
 
         dispersions = []
@@ -66,7 +66,7 @@ def wrap_validation(evaluate):
             values = torch.cat((spread[:, :3].mean(0), spread[:-1, 3:].mean(0))).tolist()
             names = ("mu", "alpha_perp", "alpha_parallel", "beta", "gamma_parallel", "gamma_perp")
         result.update({f"token_std_{name}": value for name, value in zip(names, values, strict=True)})
-        if model.config.method in ("chordres_honly_mhc_mix", "chordres_update_soft_force", "chordres_soft_force_h0_velocity"):
+        if model.config.method in ("chordres_honly_mhc_mix", "chordres_update_soft_force", "chordres_soft_force_zero_no_ve", "chordres_soft_force_h0_velocity"):
             scales = [site.mix_scales.detach() for site in model.residual_maps]
             summaries = torch.stack((torch.stack([s[0] for s in scales]).mean(),
                                      torch.stack([s[1] for s in scales]).mean(),
