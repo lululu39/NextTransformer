@@ -1,0 +1,82 @@
+{
+  "step": 35000,
+  "sequences": 64,
+  "tokens": 131072,
+  "base_ce": 2.5088699067183793,
+  "base_bpb": 0.7700223783024699,
+  "raw_velocity_table_rms": 8.813409933620104,
+  "raw_token_embedding_rms": 8.884166320564226,
+  "projected_v0_rms": 7.954633167239356,
+  "first_mu_mean": 0.03197532117728888,
+  "first_mu_rms": 0.06935112305766167,
+  "first_lookahead_rms_relative_to_position": 0.37438148441842944,
+  "shuffled_same_token_fraction": 0.0060882568359375,
+  "zero": {
+    "ce": 3.346689554254614,
+    "delta_ce": 0.8378196475362345,
+    "delta_bpb": 0.25704984611086545,
+    "row_bootstrap_delta_ce_95": [
+      0.7929854195129709,
+      0.8848655915036655
+    ],
+    "rows_with_loss_increase": 64,
+    "changed_top1_fraction": 0.399810791015625,
+    "mean_abs_token_delta_ce": 1.0937565422504048
+  },
+  "shuffled": {
+    "ce": 2.798713977535224,
+    "delta_ce": 0.28984407081684493,
+    "delta_bpb": 0.0887815565610411,
+    "row_bootstrap_delta_ce_95": [
+      0.24081197101403326,
+      0.34139607519356296
+    ],
+    "rows_with_loss_increase": 64,
+    "changed_top1_fraction": 0.22849273681640625,
+    "mean_abs_token_delta_ce": 0.512525099131874
+  },
+  "trained_zero": {
+    "ce": 2.5107135906076445,
+    "delta_ce": 0.0018436838892654027,
+    "delta_bpb": 0.000530123519583366,
+    "row_bootstrap_delta_ce_95": [
+      -0.001482704775520927,
+      0.005218246152177078
+    ],
+    "rows_with_loss_increase": 34,
+    "changed_top1_fraction": 0.20011138916015625,
+    "mean_abs_token_delta_ce": 0.39631380328793137
+  },
+  "lookup_run": "3ac13380",
+  "fixed_zero_run": "61fdbef5",
+  "input_sha256_per_rank": [
+    "8d1417ea3e6879520152af5ff76adc58a2bda3b643e64e81138afc372fd4c567",
+    "c1c0722c90d2cffddabd70d449a5f06825364af31a032d31197702613eebd6fd",
+    "0ad9cf41b23151c370c846f06c213411d3ead860f07e3b3a78b49ed20a3eac48",
+    "dcd307266bc9d30383fff4179b0e7bc65f6dafb16772cad661687a7a18644a63",
+    "f949f3d4c8fad9c35ffb5b36278591824c68f9810aeb5f241a994a2d23d053b4",
+    "efaf34ba507bb585d35ccc717b63c15cb570b4ee10406404f4ee77963fafa7eb",
+    "717815d721a0fa17131503eb18af0c1551017b836e0dd6bba11cf110d3a0c2a4",
+    "a8eba13458896d816535bbf008c8b129cb8518d2b3e78fce0e964412c409578c"
+  ],
+  "conditions": {
+    "intact": "Trained token lookup active",
+    "zero": "Zero only the copied lookup weights; velocity updates remain active",
+    "shuffled": "Permute velocity lookup indices over each rank with RNG seed 20261126 + rank, preserving frequencies and backbone IDs",
+    "trained_zero": "Independently trained fixed-zero model at step 35000 on the same inputs"
+  },
+  "periodic_validation": {
+    "tokens": 41943040,
+    "step35000": {
+      "lookup": 0.7017091086785087,
+      "fixed_zero": 0.7020409715491107
+    },
+    "step38000": {
+      "lookup": 0.6915277118148369,
+      "fixed_zero": 0.6918142862600174
+    },
+    "wins": 151,
+    "n": 152,
+    "last_20_mean_gain": 0.0003366245585191718
+  }
+}

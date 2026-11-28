@@ -11,3 +11,7 @@ The eight-rank preflight completed three full-batch updates. All eight productio
 ## Effective lookahead at update 500
 
 All 46 sublayers learned nonzero static lookahead biases and nonzero h-dependent lookahead rows. On 131,072 ClimbMix validation tokens the effective μ had a positive RMS and nonzero token-wise standard deviation at all 46 sites. First attention had bias -0.000271, effective μ RMS 0.07674, and RMS(μv)/RMS(h) of 40.09%. The median sublayer offset ratio was 36.67% (range 2.77–67.40%). The archived 5k lookup control also had nonzero biases and dynamic lookahead rows at all 46 sites. The complete fixed-zero-velocity control had 45 such sites, with a structurally unused first attention lookahead. [Per-sublayer results](artifacts/chordres-clean-lookup-step500-mu.json)
+
+## Velocity-table use at update 35,000
+
+On 64 held-out ClimbMix sequences (131,072 next-token targets), the lookup model scored 2.50887 nats per token. Zeroing its velocity table during evaluation raised CE to 3.34669. Shuffling its lookup indices across the same tokens raised CE to 2.79871. Both interventions increased mean CE for all 64 sequences. The independently trained fixed-zero model at step 35,000 scored 2.51071 on those same inputs. On the 41,943,040-token periodic validation, lookup improved BPB by 0.000332 at step 35,000 and 0.000287 at step 38,000. [Paired diagnostic](artifacts/chordres-lookup-vs-zero-35k.json)
